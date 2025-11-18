@@ -3,7 +3,7 @@ import axios from "axios";
 const apiClient = axios.create({
   baseURL:
     import.meta.env.VITE_PUBLIC_API_URL ||
-    "https://fskl1255-3001.use2.devtunnels.ms/",
+    "https://thesis-backend-aggf.onrender.com/api",
   timeout: 30000,
   headers: {
     "Content-Type": "application/json",
