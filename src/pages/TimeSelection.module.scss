@@ -1,0 +1,178 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-xl);
+  max-width: 56rem;
+  margin: 0 auto;
+  
+  @media (max-width: 768px) {
+    padding: var(--spacing-lg);
+  }
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) 0;
+  font-size: 0.875rem;
+  font-family: var(--font-family);
+  color: var(--color-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: var(--color-foreground);
+  }
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+  padding-top: var(--spacing-2xl);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-md);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  background-color: var(--color-muted);
+  border-radius: var(--radius-lg);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.description {
+  font-size: 1rem;
+  color: var(--color-accent);
+  line-height: 1.6;
+  max-width: 32rem;
+  margin: 0;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background-color: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-family: var(--font-family);
+  
+  &:hover {
+    border-color: var(--color-foreground);
+    box-shadow: var(--shadow-md);
+  }
+  
+  &.selected {
+    border-color: var(--color-foreground);
+    background-color: var(--color-muted);
+  }
+}
+
+.optionIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: var(--color-foreground);
+  color: var(--color-background);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.optionContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.optionLabel {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.optionSubtitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.optionDescription {
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.radio {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  
+  &.radioSelected {
+    border-color: var(--color-foreground);
+  }
+}
+
+.radioInner {
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: var(--color-foreground);
+  border-radius: 50%;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  padding-top: var(--spacing-xl);
+}
+
+.continueButton {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}

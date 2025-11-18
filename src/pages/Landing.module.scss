@@ -1,0 +1,110 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  gap: var(--spacing-2xl);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 48rem;
+  gap: var(--spacing-lg);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  background-color: var(--color-foreground);
+  color: var(--color-background);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+  margin: 0;
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--color-accent);
+  line-height: 1.7;
+  max-width: 36rem;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+.ctaButton {
+  margin-top: var(--spacing-md);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--spacing-lg);
+  width: 100%;
+  max-width: 60rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.featureCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-xl);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+  }
+}
+
+.featureIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--color-muted);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.featureTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.featureDescription {
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  line-height: 1.6;
+  margin: 0;
+}
