@@ -1,0 +1,12 @@
+[build]
+  # Le dice a Netlify que entre a la carpeta frontend
+  base = "frontend"
+  
+  # El comando para construir tu proyecto
+  command = "npm run build"
+  
+  # La carpeta donde Vite genera los archivos listos para producción
+  publish = "dist"
+
+[context.production]
+  environment = { NODE_VERSION = "20" }
