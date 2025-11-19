@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { motion } from "framer-motion";
 import { Clock, ChefHat, Users, ArrowLeft, Sparkles } from "lucide-react";
 import {
@@ -14,6 +14,7 @@ import Button from "../components/Button";
 import Loader from "../components/Loader";
 import PageTransition from "../components/PageTransition";
 import styles from "./RecipeFeed.module.scss";
+import { useQuery } from "@tanstack/react-query";
 
 export default function RecipeFeed() {
   const navigate = useNavigate();
@@ -22,45 +23,52 @@ export default function RecipeFeed() {
   const [recipes, setRecipes] = useAtom(recipesAtom);
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
   const [error, setError] = useState<string | null>(null);
+  const setIngredients = useSetAtom(ingredientsAtom);
 
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      if (ingredients.length === 0) {
-        navigate("/ingredients");
-        return;
-      }
+  useQuery({
+    queryKey: ["generateRecipes"],
+    queryFn: fetchRecipes,
+    enabled: recipes.length === 0 && !isLoading && !error,
+  });
 
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        const newRecipes = await generateRecipes({
-          ingredients,
-          cookingTime,
-        });
-
-        setRecipes(newRecipes);
-      } catch (err: any) {
-        console.error("Error fetching recipes:", err);
-        setError(
-          err.message ||
-            "No pudimos generar las recetas. Por favor intenta de nuevo."
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (recipes.length === 0) {
-      fetchRecipes();
+  async function fetchRecipes() {
+    if (ingredients.length === 0) {
+      navigate("/ingredients");
+      return;
     }
-  }, []); // Empty dependency array to run once on mount
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const newRecipes = await generateRecipes({
+        ingredients,
+        cookingTime,
+      });
+
+      setRecipes(newRecipes);
+      setIngredients([]); // Clear ingredients after generating recipes
+    } catch (err: any) {
+      console.error("Error fetching recipes:", err);
+      setError(
+        err.message ||
+          "No pudimos generar las recetas. Por favor intenta de nuevo."
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const handleRetry = () => {
     setRecipes([]);
     setError(null);
-    // Re-trigger fetch by clearing recipes, effect will run on remount or we could extract fetchRecipes
-    window.location.reload();
+  };
+
+  const handleStartAgain = () => {
+    handleRetry();
+    setRecipes([]);
+    setIngredients([]);
+    navigate("/ingredients");
   };
 
   if (isLoading) {
@@ -93,14 +101,6 @@ export default function RecipeFeed() {
     <PageTransition>
       <div className={styles.container}>
         <div className={styles.header}>
-          <button
-            className={styles.backButton}
-            onClick={() => navigate("/time")}
-          >
-            <ArrowLeft size={20} />
-            Volver
-          </button>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -161,7 +161,7 @@ export default function RecipeFeed() {
           transition={{ delay: 0.5 }}
           className={styles.actions}
         >
-          <Button variant="outline" onClick={() => navigate("/ingredients")}>
+          <Button variant="outline" onClick={handleStartAgain}>
             Probar con otros ingredientes
           </Button>
         </motion.div>
