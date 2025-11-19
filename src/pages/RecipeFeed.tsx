@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAtom, useSetAtom } from "jotai";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { Clock, ChefHat, Users, ArrowLeft, Sparkles } from "lucide-react";
-import {
-  ingredientsAtom,
-  cookingTimeAtom,
-  recipesAtom,
-  isLoadingAtom,
-} from "../store/atoms";
-import { generateRecipes } from "../services/recipes";
+import { useAtom, useSetAtom } from "jotai";
+import { ChefHat, Clock, Sparkles, Users } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
 import PageTransition from "../components/PageTransition";
+import { generateRecipes } from "../services/recipes";
+import {
+  cookingTimeAtom,
+  ingredientsAtom,
+  isLoadingAtom,
+  recipesAtom,
+} from "../store/atoms";
 import styles from "./RecipeFeed.module.scss";
-import { useQuery } from "@tanstack/react-query";
 
 export default function RecipeFeed() {
   const navigate = useNavigate();

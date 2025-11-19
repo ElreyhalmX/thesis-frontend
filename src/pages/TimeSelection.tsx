@@ -1,33 +1,22 @@
-import { useNavigate } from "react-router-dom";
-import { useAtom } from "jotai";
 import { motion } from "framer-motion";
+import { useAtom } from "jotai";
 import {
-  Clock,
-  ChevronRight,
   ArrowLeft,
-  Zap,
+  ChevronRight,
+  Clock,
   Coffee,
   Utensils,
+  Zap,
 } from "lucide-react";
-import {
-  cookingTimeAtom,
-  ingredientsAtom,
-  isLoadingAtom,
-  recipesAtom,
-} from "../store/atoms";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import PageTransition from "../components/PageTransition";
+import { cookingTimeAtom } from "../store/atoms";
 import styles from "./TimeSelection.module.scss";
-import { useState } from "react";
-import { generateRecipes } from "@/services/recipes";
 
 export default function TimeSelection() {
   const navigate = useNavigate();
   const [cookingTime, setCookingTime] = useAtom(cookingTimeAtom);
-  const [ingredients] = useAtom(ingredientsAtom);
-  const [recipes, setRecipes] = useAtom(recipesAtom);
-  const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
-  const [error, setError] = useState<string | null>(null);
 
   const timeOptions = [
     {
@@ -52,35 +41,8 @@ export default function TimeSelection() {
       description: "Recetas completas",
     },
   ];
-  const fetchRecipes = async () => {
-    if (ingredients.length === 0) {
-      navigate("/ingredients");
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      const newRecipes = await generateRecipes({
-        ingredients,
-        cookingTime,
-      });
-
-      setRecipes(newRecipes);
-    } catch (err: any) {
-      console.error("Error fetching recipes:", err);
-      setError(
-        err.message ||
-          "No pudimos generar las recetas. Por favor intenta de nuevo."
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleContinue = async () => {
-    fetchRecipes();
     navigate("/recipes");
   };
 
