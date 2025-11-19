@@ -4,7 +4,6 @@ const apiClient = axios.create({
   baseURL:
     import.meta.env.VITE_PUBLIC_API_URL ||
     "https://thesis-backend-aggf.onrender.com/api",
-  timeout: 30000,
   headers: {
     "Content-Type": "application/json",
   },
