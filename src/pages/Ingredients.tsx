@@ -1,46 +1,48 @@
-import { useState, KeyboardEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useAtom } from 'jotai'
-import { motion, AnimatePresence } from 'framer-motion'
-import { X, Plus, ChevronRight, ArrowLeft } from 'lucide-react'
-import { ingredientsAtom } from '../store/atoms'
-import Button from '../components/Button'
-import Input from '../components/Input'
-import PageTransition from '../components/PageTransition'
-import styles from './Ingredients.module.scss'
+"use client";
+
+import { AnimatePresence, motion } from "framer-motion";
+import { useAtom } from "jotai";
+import { AlertCircle, ArrowLeft, ChevronRight, Plus, X } from "lucide-react";
+import { type KeyboardEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/Button";
+import Input from "../components/Input";
+import PageTransition from "../components/PageTransition";
+import { ingredientsAtom } from "../store/atoms";
+import styles from "./Ingredients.module.scss";
 
 export default function Ingredients() {
-  const navigate = useNavigate()
-  const [ingredients, setIngredients] = useAtom(ingredientsAtom)
-  const [inputValue, setInputValue] = useState('')
+  const navigate = useNavigate();
+  const [ingredients, setIngredients] = useAtom(ingredientsAtom);
+  const [inputValue, setInputValue] = useState("");
 
   const addIngredient = () => {
     if (inputValue.trim() && !ingredients.includes(inputValue.trim())) {
-      setIngredients([...ingredients, inputValue.trim()])
-      setInputValue('')
+      setIngredients([...ingredients, inputValue.trim()]);
+      setInputValue("");
     }
-  }
+  };
 
   const removeIngredient = (ingredient: string) => {
-    setIngredients(ingredients.filter((i) => i !== ingredient))
-  }
+    setIngredients(ingredients.filter((i) => i !== ingredient));
+  };
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      addIngredient()
+    if (e.key === "Enter") {
+      addIngredient();
     }
-  }
+  };
 
   const handleContinue = () => {
-    if (ingredients.length > 0) {
-      navigate('/time')
+    if (ingredients.length >= 3) {
+      navigate("/time");
     }
-  }
+  };
 
   return (
     <PageTransition>
       <div className={styles.container}>
-        <button className={styles.backButton} onClick={() => navigate('/')}>
+        <button className={styles.backButton} onClick={() => navigate("/")}>
           <ArrowLeft size={20} />
           Volver
         </button>
@@ -61,7 +63,29 @@ export default function Ingredients() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.15 }}
+            className={styles.infoBox}
+          >
+            <AlertCircle size={20} />
+            <div>
+              <h3 className={styles.infoTitle}>Cómo funcionan las recetas</h3>
+              <p className={styles.infoText}>
+                Usaremos{" "}
+                <strong>únicamente los ingredientes que agregues</strong> más
+                condimentos básicos (sal, aceite, ajo, pimienta, , comino y
+                agua). No necesitas agregar estos.
+              </p>
+              <p className={styles.recommendedText}>
+                Te recomendamos agregar <strong>al menos 3 ingredientes</strong>{" "}
+                para mejores resultados.
+              </p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
             className={styles.inputSection}
           >
             <div className={styles.inputWrapper}>
@@ -82,7 +106,7 @@ export default function Ingredients() {
             {ingredients.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+                animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 className={styles.ingredientsList}
               >
@@ -113,6 +137,17 @@ export default function Ingredients() {
             )}
           </AnimatePresence>
 
+          {ingredients.length > 0 && ingredients.length < 3 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className={styles.warningText}
+            >
+              Agrega al menos {3 - ingredients.length} ingrediente
+              {3 - ingredients.length !== 1 ? "s" : ""} más para continuar.
+            </motion.div>
+          )}
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -122,7 +157,7 @@ export default function Ingredients() {
             <Button
               size="lg"
               onClick={handleContinue}
-              disabled={ingredients.length === 0}
+              disabled={ingredients.length < 3}
               className={styles.continueButton}
             >
               Continuar
@@ -132,5 +167,5 @@ export default function Ingredients() {
         </div>
       </div>
     </PageTransition>
-  )
+  );
 }
