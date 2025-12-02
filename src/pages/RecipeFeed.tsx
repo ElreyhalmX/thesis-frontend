@@ -83,12 +83,11 @@ export default function RecipeFeed() {
             <h2 className={styles.errorTitle}>Algo salió mal</h2>
             <p className={styles.errorMessage}>{error}</p>
             <div className={styles.errorActions}>
-              <Button onClick={handleRetry}>Intentar de nuevo</Button>
               <Button
                 variant="outline"
                 onClick={() => navigate("/ingredients")}
               >
-                Volver a ingredientes
+                Probar con otros ingredientes
               </Button>
             </div>
           </div>
