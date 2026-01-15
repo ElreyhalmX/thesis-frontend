@@ -1,11 +1,12 @@
 import { useAtom } from 'jotai'
-import { recipesAtom, ingredientsAtom, cookingTimeAtom, isLoadingAtom } from '../store/atoms'
 import { generateRecipes } from '../services/recipes'
+import { cookingTimeAtom, ingredientsAtom, isLoadingAtom, portionsAtom, recipesAtom } from '../store/atoms'
 
 export function useRecipes() {
   const [recipes, setRecipes] = useAtom(recipesAtom)
   const [ingredients] = useAtom(ingredientsAtom)
   const [cookingTime] = useAtom(cookingTimeAtom)
+  const [portions] = useAtom(portionsAtom)
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom)
 
   const fetchRecipes = async () => {
@@ -19,6 +20,7 @@ export function useRecipes() {
       const newRecipes = await generateRecipes({
         ingredients,
         cookingTime,
+        portions,
       })
 
       setRecipes(newRecipes)
