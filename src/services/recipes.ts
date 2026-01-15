@@ -4,6 +4,7 @@ import { Recipe } from '../store/atoms'
 export interface GenerateRecipesParams {
   ingredients: string[]
   cookingTime: number
+  portions: number
 }
 
 export interface GenerateRecipesResponse {

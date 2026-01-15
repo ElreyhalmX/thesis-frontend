@@ -176,3 +176,53 @@
   align-items: center;
   gap: var(--spacing-xs);
 }
+
+.portionsSection {
+  background-color: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.portionsInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  
+  span {
+    font-size: 1rem;
+    color: var(--color-accent);
+  }
+}
+
+.portionsInput {
+  font-family: var(--font-family);
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  width: 5rem;
+  text-align: center;
+  
+  &:focus {
+    outline: none;
+    border-color: var(--color-foreground);
+  }
+}

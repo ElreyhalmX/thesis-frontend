@@ -1,22 +1,24 @@
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import {
-  ArrowLeft,
-  ChevronRight,
-  Clock,
-  Coffee,
-  Utensils,
-  Zap,
+    ArrowLeft,
+    ChevronRight,
+    Clock,
+    Coffee,
+    Users,
+    Utensils,
+    Zap,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import PageTransition from "../components/PageTransition";
-import { cookingTimeAtom } from "../store/atoms";
+import { cookingTimeAtom, portionsAtom } from "../store/atoms";
 import styles from "./TimeSelection.module.scss";
 
 export default function TimeSelection() {
   const navigate = useNavigate();
   const [cookingTime, setCookingTime] = useAtom(cookingTimeAtom);
+  const [portions, setPortions] = useAtom(portionsAtom);
 
   const timeOptions = [
     {
@@ -109,6 +111,46 @@ export default function TimeSelection() {
                 </div>
               </motion.button>
             ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className={styles.portionsSection}
+          >
+           <div className={styles.sectionHeader}>
+              <Users size={24} />
+              <h2>¿Para cuántas personas?</h2>
+           </div>
+           <div className={styles.portionsInputWrapper}>
+              <button 
+                className={styles.portionsButton} // Need to add this style or just use inline/standard button
+                onClick={() => setPortions(Math.max(1, portions - 1))}
+                style={{ padding: '0.5rem', borderRadius: '50%', border: '1px solid currentColor', background: 'transparent', cursor: 'pointer' }}
+              >
+                -
+              </button>
+              <input
+                type="number"
+                min="1"
+                max="20"
+                value={portions}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value);
+                  if (!isNaN(val) && val > 0 && val <= 20) setPortions(val);
+                }}
+                className={styles.portionsInput}
+              />
+              <span>personas</span>
+              <button 
+                className={styles.portionsButton}
+                onClick={() => setPortions(Math.min(20, portions + 1))}
+                style={{ padding: '0.5rem', borderRadius: '50%', border: '1px solid currentColor', background: 'transparent', cursor: 'pointer' }}
+              >
+                +
+              </button>
+           </div>
           </motion.div>
 
           <motion.div

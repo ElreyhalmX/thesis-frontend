@@ -9,10 +9,11 @@ import Loader from "../components/Loader";
 import PageTransition from "../components/PageTransition";
 import { generateRecipes } from "../services/recipes";
 import {
-  cookingTimeAtom,
-  ingredientsAtom,
-  isLoadingAtom,
-  recipesAtom,
+    cookingTimeAtom,
+    ingredientsAtom,
+    isLoadingAtom,
+    portionsAtom,
+    recipesAtom,
 } from "../store/atoms";
 import styles from "./RecipeFeed.module.scss";
 
@@ -20,6 +21,7 @@ export default function RecipeFeed() {
   const navigate = useNavigate();
   const [ingredients] = useAtom(ingredientsAtom);
   const [cookingTime] = useAtom(cookingTimeAtom);
+  const [portions] = useAtom(portionsAtom);
   const [recipes, setRecipes] = useAtom(recipesAtom);
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
   const [error, setError] = useState<string | null>(null);
@@ -44,6 +46,7 @@ export default function RecipeFeed() {
       const newRecipes = await generateRecipes({
         ingredients,
         cookingTime,
+        portions,
       });
 
       setRecipes(newRecipes);
