@@ -1,7 +1,9 @@
 import { AnimatePresence } from 'framer-motion'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import History from './pages/History'
 import Ingredients from './pages/Ingredients'
 import Landing from './pages/Landing'
+import Profile from './pages/Profile'
 import RecipeFeed from './pages/RecipeFeed'
 import RecipeView from './pages/RecipeView'
 import TimeSelection from './pages/TimeSelection'
@@ -25,6 +27,8 @@ function App() {
         <Route path="/recipes" element={<RecipeFeed />} />
         <Route path="/recipe/:id" element={<RecipeView />} />
         <Route path="/planner" element={<WeeklyPlanner />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/history" element={<History />} />
       </Routes>
     </AnimatePresence>
     </>

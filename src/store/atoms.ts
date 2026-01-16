@@ -48,3 +48,28 @@ export const portionsAtom = atomWithStorage<number>(
 export const recipesAtom = atom<Recipe[]>([]);
 export const isLoadingAtom = atom<boolean>(false);
 export const errorAtom = atom<string | null>(null);
+
+// Thesis Features: Profile & History
+export interface UserProfile {
+  name: string;
+  budgetLevel: 'Bajo' | 'Medio' | 'Alto';
+  dietaryRestrictions: string[];
+  nutritionalGoal: 'Mantenimiento' | 'Pérdida de Peso' | 'Ganancia Muscular';
+}
+
+export interface HistoryItem {
+  id: string;
+  recipeId: string;
+  recipeTitle: string;
+  date: string;
+  estimatedSavings: number; // in USD (simulated)
+}
+
+export const userProfileAtom = atomWithStorage<UserProfile>("culinary_profile", {
+  name: "",
+  budgetLevel: "Bajo",
+  dietaryRestrictions: [],
+  nutritionalGoal: "Mantenimiento"
+});
+
+export const historyAtom = atomWithStorage<HistoryItem[]>("culinary_history", []);

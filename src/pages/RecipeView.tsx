@@ -2,20 +2,21 @@ import { motion } from 'framer-motion'
 import html2canvas from 'html2canvas'
 import { useAtom } from 'jotai'
 import jsPDF from 'jspdf'
-import { ArrowLeft, ChefHat, Clock, Download, Heart, Lightbulb, Share2, Users } from 'lucide-react'
+import { ArrowLeft, CheckCircle, ChefHat, Clock, Download, Heart, Lightbulb, Share2, Users } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Button from '../components/Button'
 import PageTransition from '../components/PageTransition'
 import apiClient from '../config/axios'
 import { useScreenshot } from '../hooks/useScreenshot'
-import { recipesAtom } from '../store/atoms'
+import { historyAtom, recipesAtom } from '../store/atoms'
 import styles from './RecipeView.module.scss'
 
 export default function RecipeView() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [recipes] = useAtom(recipesAtom)
+  const [, setHistory] = useAtom(historyAtom)
   const [liked, setLiked] = useState(false)
   const { capture, isCapturing } = useScreenshot()
 
@@ -48,6 +49,28 @@ export default function RecipeView() {
       console.error("PDF Export failed", err);
       return false;
     }
+  };
+
+  const handleMarkCooked = () => {
+    if (!recipe) return;
+    
+    // Simulate savings: Restaurant ($6) - Home ($2) = $4 saved per serving * servings
+    const estimatedSavings = 4 * recipe.servings;
+    
+    const newItem = {
+      id: `history-${Date.now()}`,
+      recipeId: recipe.id,
+      recipeTitle: recipe.title,
+      date: new Date().toISOString(),
+      estimatedSavings: estimatedSavings
+    };
+    
+    // We need to use useAtom for history. 
+    // Since we are inside the component loop, we should define useAtom(historyAtom) at top level.
+    setHistory(prev => [...prev, newItem]);
+    
+    // Visual feedback could be added here (toast)
+    alert("¡Receta registrada en tu historial! Ahorro estimado: $" + estimatedSavings);
   };
 
   const handleShare = async () => {
@@ -128,6 +151,13 @@ export default function RecipeView() {
                   title={liked ? "Liked!" : "Like recipe"}
                 >
                   <Heart size={20} fill={liked ? "currentColor" : "none"} />
+                </button>
+                <button 
+                  className={styles.actionButton}
+                  onClick={handleMarkCooked}
+                  title="Marcar como cocinada (Agregar a Historial)"
+                >
+                  <CheckCircle size={20} />
                 </button>
                 <button 
                   className={styles.actionButton}
