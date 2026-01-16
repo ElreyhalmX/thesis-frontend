@@ -26,8 +26,6 @@ export default function RecipeView() {
         setLiked(true)
       }
     }
-    // Scroll to top when entering the recipe view
-    window.scrollTo(0, 0);
   }, [id])
 
   if (!recipe) {

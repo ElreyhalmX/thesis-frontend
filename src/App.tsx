@@ -7,12 +7,14 @@ import RecipeView from './pages/RecipeView'
 import TimeSelection from './pages/TimeSelection'
 
 import FloatingBackground from './components/FloatingBackground'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
   const location = useLocation()
 
   return (
     <>
+      <ScrollToTop />
       <FloatingBackground />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
