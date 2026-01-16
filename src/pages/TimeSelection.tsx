@@ -120,14 +120,13 @@ export default function TimeSelection() {
             className={styles.portionsSection}
           >
            <div className={styles.sectionHeader}>
-              <Users size={24} />
+              <Users size={24} color="var(--color-primary)" />
               <h2>¿Para cuántas personas?</h2>
            </div>
            <div className={styles.portionsInputWrapper}>
               <button 
-                className={styles.portionsButton} // Need to add this style or just use inline/standard button
+                className={styles.portionsButton}
                 onClick={() => setPortions(Math.max(1, portions - 1))}
-                style={{ padding: '0.5rem', borderRadius: '50%', border: '1px solid currentColor', background: 'transparent', cursor: 'pointer' }}
               >
                 -
               </button>
@@ -146,7 +145,6 @@ export default function TimeSelection() {
               <button 
                 className={styles.portionsButton}
                 onClick={() => setPortions(Math.min(20, portions + 1))}
-                style={{ padding: '0.5rem', borderRadius: '50%', border: '1px solid currentColor', background: 'transparent', cursor: 'pointer' }}
               >
                 +
               </button>

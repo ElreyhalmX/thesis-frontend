@@ -14,7 +14,7 @@ export function useScreenshot() {
       const canvas = await html2canvas(element, {
         useCORS: true,
         scale: 2, // Better resolution
-        backgroundColor: '#ffffff', // Ensure white background
+        backgroundColor: '#121212', // Ensure dark background matches theme
         logging: false,
       });
 

@@ -5,7 +5,7 @@
   padding: var(--spacing-xl);
   max-width: 56rem;
   margin: 0 auto;
-  
+
   @media (max-width: 768px) {
     padding: var(--spacing-lg);
   }
@@ -23,7 +23,7 @@
   border: none;
   cursor: pointer;
   transition: color 0.2s ease;
-  
+
   &:hover {
     color: var(--color-foreground);
   }
@@ -59,7 +59,7 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin: 0;
-  
+
   @media (max-width: 768px) {
     font-size: 2rem;
   }
@@ -91,12 +91,12 @@
   transition: all 0.2s ease;
   text-align: left;
   font-family: var(--font-family);
-  
+
   &:hover {
     border-color: var(--color-foreground);
     box-shadow: var(--shadow-md);
   }
-  
+
   &.selected {
     border-color: var(--color-foreground);
     background-color: var(--color-muted);
@@ -126,6 +126,7 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0;
+  color: var(--color-primary);
 }
 
 .optionSubtitle {
@@ -151,7 +152,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  
+
   &.radioSelected {
     border-color: var(--color-foreground);
   }
@@ -192,7 +193,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  
+
   h2 {
     font-size: 1.25rem;
     font-weight: 600;
@@ -204,10 +205,31 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  
+
   span {
     font-size: 1rem;
     color: var(--color-accent);
+  }
+}
+
+.portionsButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+
+  &:hover {
+    background-color: var(--color-primary);
+    color: var(--color-background);
   }
 }
 
@@ -220,7 +242,9 @@
   border-radius: var(--radius-md);
   width: 5rem;
   text-align: center;
-  
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+
   &:focus {
     outline: none;
     border-color: var(--color-foreground);
