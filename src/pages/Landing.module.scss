@@ -34,7 +34,7 @@
   font-weight: 700;
   color: var(--color-foreground);
   margin: 0;
-  
+
   @media (max-width: 768px) {
     font-size: 2.5rem;
   }
@@ -45,14 +45,67 @@
   color: var(--color-accent);
   line-height: 1.7;
   max-width: 36rem;
-  
+
   @media (max-width: 768px) {
     font-size: 1rem;
   }
 }
 
 .ctaButton {
-  margin-top: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+}
+
+.statsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2xl);
+  margin: var(--spacing-xl) 0;
+  padding: var(--spacing-lg) var(--spacing-2xl);
+  background-color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    width: 100%;
+    padding: var(--spacing-lg);
+  }
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-xs);
+}
+
+.statValue {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statDivider {
+  width: 1px;
+  height: 3rem;
+  background-color: var(--color-border);
+
+  @media (max-width: 640px) {
+    width: 100%;
+    height: 1px;
+  }
 }
 
 .features {
@@ -61,7 +114,7 @@
   gap: var(--spacing-lg);
   width: 100%;
   max-width: 60rem;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
@@ -78,7 +131,7 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   transition: all 0.3s ease;
-  
+
   &:hover {
     box-shadow: var(--shadow-md);
     transform: translateY(-4px);
