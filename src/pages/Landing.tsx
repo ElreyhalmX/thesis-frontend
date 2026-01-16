@@ -67,12 +67,16 @@ export default function Landing() {
             className={styles.statsContainer}
           >
              <div className={styles.statItem}>
-               <span className={styles.statValue}>{stats.total_recipes}</span>
+               <span className={styles.statValue}>
+                 {stats.total_recipes > 0 ? stats.total_recipes : "-"}
+               </span>
                <span className={styles.statLabel}>Recetas Generadas</span>
              </div>
              <div className={styles.statDivider} />
              <div className={styles.statItem}>
-               <span className={styles.statValue}>{stats.total_likes}</span>
+               <span className={styles.statValue}>
+                 {stats.total_likes > 0 ? stats.total_likes : "-"}
+               </span>
                <span className={styles.statLabel}>Likes Totales</span>
              </div>
           </motion.div>
