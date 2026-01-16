@@ -1,12 +1,14 @@
-import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ChefHat, Sparkles, Clock, DollarSign } from 'lucide-react'
+import { ChefHat, Clock, DollarSign, Sparkles } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 import PageTransition from '../components/PageTransition'
+import { useStats } from '../hooks/useStats'
 import styles from './Landing.module.scss'
 
 export default function Landing() {
   const navigate = useNavigate()
+  const stats = useStats()
 
   const features = [
     {
@@ -57,6 +59,23 @@ export default function Landing() {
             Tu asistente culinario inteligente. Transforma tus ingredientes en
             recetas deliciosas, económicas y adaptadas al contexto venezolano.
           </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.7 }}
+            className={styles.statsContainer}
+          >
+             <div className={styles.statItem}>
+               <span className={styles.statValue}>{stats.total_recipes}</span>
+               <span className={styles.statLabel}>Recetas Generadas</span>
+             </div>
+             <div className={styles.statDivider} />
+             <div className={styles.statItem}>
+               <span className={styles.statValue}>{stats.total_likes}</span>
+               <span className={styles.statLabel}>Likes Totales</span>
+             </div>
+          </motion.div>
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
