@@ -17,14 +17,24 @@ export default function Ingredients() {
   const [inputValue, setInputValue] = useState("");
 
   const addIngredient = () => {
-    if (inputValue.trim() && !ingredients.includes(inputValue.trim())) {
-      setIngredients([...ingredients, inputValue.trim()]);
-      setInputValue("");
+    if (inputValue.trim()) {
+      const exists = ingredients.some(i => i.name.toLowerCase() === inputValue.trim().toLowerCase());
+      if (!exists) {
+        setIngredients([
+          ...ingredients, 
+          { 
+            id: Date.now().toString(), 
+            name: inputValue.trim() 
+            // Quantity and Expiry could be added here later via modal
+          }
+        ]);
+        setInputValue("");
+      }
     }
   };
 
-  const removeIngredient = (ingredient: string) => {
-    setIngredients(ingredients.filter((i) => i !== ingredient));
+  const removeIngredient = (id: string) => {
+    setIngredients(ingredients.filter((i) => i.id !== id));
   };
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -116,16 +126,16 @@ export default function Ingredients() {
                 <div className={styles.tags}>
                   {ingredients.map((ingredient, index) => (
                     <motion.div
-                      key={ingredient}
+                      key={ingredient.id}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.8 }}
                       transition={{ delay: index * 0.05 }}
                       className={styles.tag}
                     >
-                      <span>{ingredient}</span>
+                      <span>{ingredient.name}</span>
                       <button
-                        onClick={() => removeIngredient(ingredient)}
+                        onClick={() => removeIngredient(ingredient.id)}
                         className={styles.removeButton}
                       >
                         <X size={16} />
@@ -163,6 +173,14 @@ export default function Ingredients() {
               Continuar
               <ChevronRight size={20} />
             </Button>
+            
+            <button 
+              className={styles.plainButton} 
+              onClick={() => navigate('/planner')}
+              style={{ marginTop: '1rem', background: 'transparent', border: 'none', color: 'var(--color-primary)', cursor: 'pointer', textDecoration: 'underline' }}
+            >
+              o genera un Plan Semanal
+            </button>
           </motion.div>
         </div>
       </div>

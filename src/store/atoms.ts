@@ -1,6 +1,20 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
+export interface Ingredient {
+  id: string;
+  name: string;
+  quantity?: string;
+  expiryDate?: string;
+}
+
+export interface Nutrition {
+  calories: number;
+  protein: string;
+  carbs: string;
+  fat: string;
+}
+
 export interface Recipe {
   id: string;
   title: string;
@@ -11,9 +25,15 @@ export interface Recipe {
   difficulty: string;
   servings: number;
   tips?: string[];
+  nutrition?: Nutrition;
 }
 
-export const ingredientsAtom = atomWithStorage<string[]>(
+export const ingredientsAtom = atomWithStorage<Ingredient[]>(
+  "culinary_ingredients_v2",
+  []
+);
+
+export const legacyIngredientsAtom = atomWithStorage<string[]>(
   "culinary_ingredients",
   []
 );

@@ -35,3 +35,26 @@ export async function generateRecipes(
     throw new Error('No se pudieron generar las recetas. Verifica tu conexión.')
   }
 }
+
+export interface WeeklyPlanItem {
+  day: string;
+  meal: string;
+  rationale: string;
+  ingredientsNeeded: string[];
+}
+
+export async function generateWeeklyPlan(
+  ingredients: string[],
+  portions: number
+): Promise<WeeklyPlanItem[]> {
+  try {
+    const response = await apiClient.post<{ plan: WeeklyPlanItem[] }>(
+      '/recipes/generate-plan',
+      { ingredients, portions }
+    );
+    return response.data.plan;
+  } catch (error) {
+    console.error('Failed to generate plan:', error);
+    throw new Error('No se pudo generar el plan semanal.');
+  }
+}

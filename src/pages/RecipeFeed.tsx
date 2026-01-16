@@ -44,7 +44,7 @@ export default function RecipeFeed() {
       setError(null);
 
       const newRecipes = await generateRecipes({
-        ingredients,
+        ingredients: ingredients.map(i => i.name),
         cookingTime,
         portions,
       });

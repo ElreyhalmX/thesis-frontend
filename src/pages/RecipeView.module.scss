@@ -1,3 +1,57 @@
+/* Nutrition Card Styles */
+.nutritionCard {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nutritionHeader {
+  font-size: 0.9rem;
+  color: #fff;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nutritionSub {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
+.macros {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.macro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(255, 159, 28, 0.1);
+  /* Primary color low opacity */
+  padding: 0.5rem;
+  border-radius: 8px;
+  flex: 1;
+}
+
+.macroValue {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.macroLabel {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 0.1rem;
+}
+
 .container {
   min-height: 100vh;
   padding: var(--spacing-xl);

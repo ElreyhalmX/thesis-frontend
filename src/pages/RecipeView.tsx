@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useAtom } from 'jotai'
-import { ArrowLeft, ChefHat, Clock, Download, Heart, Lightbulb, Users } from 'lucide-react'
+import { ArrowLeft, ChefHat, Clock, Download, Heart, Lightbulb, Share2, Users } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Button from '../components/Button'
@@ -61,6 +61,12 @@ export default function RecipeView() {
     capture('recipe-content', `${recipe.title.replace(/\s+/g, '-').toLowerCase()}-recipe`)
   }
 
+  const handleShare = () => {
+    const text = `🍽️ *${recipe.title}*\n\n📝 Ingredientes: ${recipe.ingredients.length}\n⏱️ Tiempo: ${recipe.prepTime} min\n\nVer más en Culinary AI!`;
+    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+  };
+
   return (
     <PageTransition>
       <div className={styles.container}>
@@ -98,6 +104,13 @@ export default function RecipeView() {
                 >
                   <Download size={20} />
                 </button>
+                <button 
+                  className={styles.actionButton}
+                  onClick={handleShare}
+                  title="Share on WhatsApp"
+                >
+                  <Share2 size={20} />
+                </button>
               </div>
             </div>
             <p className={styles.description}>{recipe.description}</p>
@@ -125,6 +138,32 @@ export default function RecipeView() {
                 </div>
               </div>
             </div>
+
+            {recipe.nutrition && (
+              <div className={styles.nutritionCard}>
+                <div className={styles.nutritionHeader}>
+                  Información Nutricional <span className={styles.nutritionSub}>(estimada)</span>
+                </div>
+                <div className={styles.macros}>
+                  <div className={styles.macro}>
+                    <span className={styles.macroValue}>{recipe.nutrition.calories}</span>
+                    <span className={styles.macroLabel}>Kcal</span>
+                  </div>
+                  <div className={styles.macro}>
+                    <span className={styles.macroValue}>{recipe.nutrition.protein}</span>
+                    <span className={styles.macroLabel}>Prot</span>
+                  </div>
+                  <div className={styles.macro}>
+                    <span className={styles.macroValue}>{recipe.nutrition.carbs}</span>
+                    <span className={styles.macroLabel}>Carbs</span>
+                  </div>
+                  <div className={styles.macro}>
+                    <span className={styles.macroValue}>{recipe.nutrition.fat}</span>
+                    <span className={styles.macroLabel}>Grasas</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </motion.div>
 
           <div className={styles.sections}>
