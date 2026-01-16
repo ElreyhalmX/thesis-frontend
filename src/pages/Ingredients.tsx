@@ -162,7 +162,8 @@ export default function Ingredients() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className={styles.actions}
+            className={styles.actionsGroup}
+            style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginTop: '2rem', flexWrap: 'wrap' }}
           >
             <Button
               size="lg"
@@ -177,9 +178,9 @@ export default function Ingredients() {
             <button 
               className={styles.plainButton} 
               onClick={() => navigate('/planner')}
-              style={{ marginTop: '1rem', background: 'transparent', border: 'none', color: 'var(--color-primary)', cursor: 'pointer', textDecoration: 'underline' }}
+              style={{ background: 'transparent', border: '1px solid var(--color-primary)', borderRadius: '99px', padding: '0.75rem 1.5rem', color: 'var(--color-primary)', cursor: 'pointer', fontWeight: 600 }}
             >
-              o genera un Plan Semanal
+              o Plan Semanal
             </button>
           </motion.div>
         </div>

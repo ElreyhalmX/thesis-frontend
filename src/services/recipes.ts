@@ -38,9 +38,8 @@ export async function generateRecipes(
 
 export interface WeeklyPlanItem {
   day: string;
-  meal: string;
+  recipe: Recipe;
   rationale: string;
-  ingredientsNeeded: string[];
 }
 
 export async function generateWeeklyPlan(

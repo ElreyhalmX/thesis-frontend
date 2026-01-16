@@ -19,6 +19,42 @@ export default function RecipeView() {
 
   const recipe = recipes.find((r) => r.id === id)
 
+  // ... (existing useEffect)
+
+  const downloadPDF = async () => {
+    const input = document.getElementById('recipe-content');
+    if (!input) return;
+
+    try {
+      const canvas = await html2canvas(input, {
+        scale: 2,
+        backgroundColor: '#121212', // Match dark theme
+        useCORS: true
+      });
+      
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'px',
+        format: [canvas.width, canvas.height]
+      });
+
+      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      pdf.save(`${recipe?.title.replace(/\s+/g, '-').toLowerCase() || 'receta'}.pdf`);
+      return true;
+    } catch (err) {
+      console.error("PDF Export failed", err);
+      return false;
+    }
+  };
+
+  const handleShare = async () => {
+    await downloadPDF();
+    const text = `🍽️ *${recipe?.title}*\n\n📝 Ingredientes: ${recipe?.ingredients.length}\n⏱️ Tiempo: ${recipe?.prepTime} min\n\nDescarga el PDF para ver la receta completa.\nVer más en Culinary AI!`;
+    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+  };
+
   useEffect(() => {
     if (id) {
       const likedRecipes = JSON.parse(localStorage.getItem('likedRecipes') || '[]')

@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { useAtom, useSetAtom } from "jotai";
-import { ChefHat, Clock, Sparkles, Users } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
 import PageTransition from "../components/PageTransition";
+import RecipeCard from "../components/RecipeCard";
 import { generateRecipes } from "../services/recipes";
 import {
     cookingTimeAtom,
@@ -125,34 +126,11 @@ export default function RecipeFeed() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className={styles.card}
-              onClick={() => navigate(`/recipe/${recipe.id}`)}
             >
-              <div className={styles.cardHeader}>
-                <h2 className={styles.cardTitle}>{recipe.title}</h2>
-                <span className={styles.difficulty}>{recipe.difficulty}</span>
-              </div>
-
-              <p className={styles.cardDescription}>{recipe.description}</p>
-
-              <div className={styles.cardMeta}>
-                <div className={styles.metaItem}>
-                  <Clock size={16} />
-                  <span>{recipe.prepTime} min</span>
-                </div>
-                <div className={styles.metaItem}>
-                  <Users size={16} />
-                  <span>{recipe.servings} porciones</span>
-                </div>
-                <div className={styles.metaItem}>
-                  <ChefHat size={16} />
-                  <span>{recipe.ingredients.length} ingredientes</span>
-                </div>
-              </div>
-
-              <Button variant="outline" className={styles.cardButton}>
-                Ver receta completa
-              </Button>
+              <RecipeCard 
+                recipe={recipe} 
+                onClick={() => navigate(`/recipe/${recipe.id}`)} 
+              />
             </motion.div>
           ))}
         </div>
