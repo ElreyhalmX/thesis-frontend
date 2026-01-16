@@ -1,56 +1,71 @@
 import { motion } from 'framer-motion'
 import { Apple, Carrot, ChefHat, Coffee, Pizza } from 'lucide-react'
+import { useMemo } from 'react'
 
 // Array of icons to float in the background
 const icons = [ChefHat, Carrot, Apple, Pizza, Coffee]
 
 export default function FloatingBackground() {
+  // Generate random particles once
+  const particles = useMemo(() => {
+    return [...Array(20)].map((_, i) => ({
+      Icon: icons[i % icons.length],
+      initialX: Math.random() * 100, // Percentage 0-100
+      initialY: Math.random() * 100, // Percentage 0-100
+      size: 30 + Math.random() * 40,
+      duration: 15 + Math.random() * 20, // Slower, more gentle
+      delay: Math.random() * 5,
+      // Random movement ranges
+      moveX: Math.random() * 60 - 30, 
+      moveY: Math.random() * 60 - 30,
+    }))
+  }, []) // Empty dependency array ensures this runs only once per mount
+
   return (
     <div 
       style={{
         position: 'fixed',
         top: 0,
         left: 0,
-        width: '100%',
-        height: '100%',
+        width: '100vw',
+        height: '100vh',
         zIndex: -1,
         overflow: 'hidden',
         pointerEvents: 'none',
         background: 'radial-gradient(circle at 50% 50%, var(--color-muted) 0%, var(--color-background) 100%)'
       }}
     >
-      {/* Generate 15 floating icons with random positions and animation parameters */}
-      {[...Array(15)].map((_, i) => {
-        const Icon = icons[i % icons.length]
-        const delay = i * 0.5
-        const duration = 10 + Math.random() * 10
+      {particles.map((particle, i) => {
+        const { Icon, initialX, initialY, size, duration, delay, moveX, moveY } = particle
         
         return (
           <motion.div
             key={i}
             initial={{ 
               opacity: 0, 
-              x: Math.random() * window.innerWidth, 
-              y: Math.random() * window.innerHeight 
+              left: `${initialX}%`, 
+              top: `${initialY}%`
             }}
             animate={{ 
-              opacity: [0.03, 0.08, 0.03], 
-              y: [0, -100, 0],
-              x: [0, Math.random() * 50 - 25, 0],
-              rotate: [0, 360]
+              opacity: [0.03, 0.1, 0.03], 
+              // Float around the initial position
+              x: [0, moveX, 0],
+              y: [0, moveY, 0],
+              rotate: [0, 180, 360],
+              scale: [1, 1.2, 1]
             }}
             transition={{ 
               duration, 
               repeat: Infinity, 
               delay,
-              ease: "linear"
+              ease: "easeInOut"
             }}
             style={{
               position: 'absolute',
               color: 'var(--color-primary)',
             }}
           >
-            <Icon size={30 + Math.random() * 40} />
+            <Icon size={size} />
           </motion.div>
         )
       })}
