@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useAtom } from 'jotai'
 import { ArrowLeft, ChefHat, Clock, Download, Heart, Lightbulb, Users } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Button from '../components/Button'
 import PageTransition from '../components/PageTransition'
@@ -19,6 +19,15 @@ export default function RecipeView() {
 
   const recipe = recipes.find((r) => r.id === id)
 
+  useEffect(() => {
+    if (id) {
+      const likedRecipes = JSON.parse(localStorage.getItem('likedRecipes') || '[]')
+      if (likedRecipes.includes(id)) {
+        setLiked(true)
+      }
+    }
+  }, [id])
+
   if (!recipe) {
     return (
       <PageTransition>
@@ -33,11 +42,16 @@ export default function RecipeView() {
   }
 
   const handleLike = async () => {
-    if (liked) return
+    if (liked || !id) return
 
     try {
       await apiClient.post('/metrics/like')
       setLiked(true)
+      const likedRecipes = JSON.parse(localStorage.getItem('likedRecipes') || '[]')
+      if (!likedRecipes.includes(id)) {
+        likedRecipes.push(id)
+        localStorage.setItem('likedRecipes', JSON.stringify(likedRecipes))
+      }
     } catch (error) {
       console.error('Error liking recipe:', error)
     }

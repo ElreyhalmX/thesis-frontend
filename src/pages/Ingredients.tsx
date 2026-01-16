@@ -90,7 +90,7 @@ export default function Ingredients() {
           >
             <div className={styles.inputWrapper}>
               <Input
-                placeholder="ej: tomate, cebolla, ají dulce..."
+                placeholder="Escribe un ingrediente (ej. Pollo)"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
