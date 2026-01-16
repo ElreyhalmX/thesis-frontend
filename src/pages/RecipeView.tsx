@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
+import html2canvas from 'html2canvas'
 import { useAtom } from 'jotai'
+import jsPDF from 'jspdf'
 import { ArrowLeft, ChefHat, Clock, Download, Heart, Lightbulb, Share2, Users } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -97,11 +99,6 @@ export default function RecipeView() {
     capture('recipe-content', `${recipe.title.replace(/\s+/g, '-').toLowerCase()}-recipe`)
   }
 
-  const handleShare = () => {
-    const text = `🍽️ *${recipe.title}*\n\n📝 Ingredientes: ${recipe.ingredients.length}\n⏱️ Tiempo: ${recipe.prepTime} min\n\nVer más en Culinary AI!`;
-    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    window.open(url, '_blank');
-  };
 
   return (
     <PageTransition>
