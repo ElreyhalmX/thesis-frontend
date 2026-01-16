@@ -33,6 +33,54 @@ export default function Landing() {
       <div className={styles.container}>
         <div className={styles.hero}>
           <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className={styles.topNav}
+            style={{ 
+              position: 'absolute', 
+              top: '2rem', 
+              right: '2rem', 
+              display: 'flex', 
+              gap: '1.5rem', 
+              zIndex: 50 
+            }}
+          >
+             <button 
+               onClick={() => navigate('/history')} 
+               style={{ 
+                 background: 'rgba(255,255,255,0.1)', 
+                 border: '1px solid rgba(255,255,255,0.2)',
+                 padding: '0.5rem 1rem',
+                 borderRadius: '20px', 
+                 color: '#fff', 
+                 cursor: 'pointer',
+                 fontSize: '0.9rem',
+                 fontWeight: 500,
+                 backdropFilter: 'blur(10px)'
+               }}
+             >
+               📜 Historial
+             </button>
+             <button 
+               onClick={() => navigate('/profile')} 
+               style={{ 
+                 background: 'rgba(255,255,255,0.1)', 
+                 border: '1px solid rgba(255,255,255,0.2)',
+                 padding: '0.5rem 1rem',
+                 borderRadius: '20px', 
+                 color: '#fff', 
+                 cursor: 'pointer',
+                 fontSize: '0.9rem',
+                 fontWeight: 500,
+                 backdropFilter: 'blur(10px)'
+               }}
+             >
+               👤 Mi Perfil
+             </button>
+          </motion.div>
+
+          <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
