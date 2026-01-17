@@ -45,7 +45,21 @@ export const portionsAtom = atomWithStorage<number>(
   "culinary_portions",
   2
 );
+// Import WeaklyPlanItem or define a simple interface for storage if circular dependency is an issue.
+// Ideally, we move types to a shared types file, but for now we'll imply the type or use 'any' if needed, 
+// but let's try to do it right. We need to decouple types.
+// For now, let's just use 'any[]' to avoid circular deps with services/recipes.ts if it imports atoms.
+// Actually, services imports atoms. So atoms cannot import services.
+// We will define the structure loosely or duplicate the interface here to avoid circular dependency.
+
+export interface WeeklyPlanItemState {
+  day: string;
+  recipe: Recipe;
+  rationale: string;
+}
+
 export const recipesAtom = atom<Recipe[]>([]);
+export const weeklyPlanAtom = atom<WeeklyPlanItemState[]>([]);
 export const isLoadingAtom = atom<boolean>(false);
 export const errorAtom = atom<string | null>(null);
 
