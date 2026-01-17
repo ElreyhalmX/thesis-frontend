@@ -10,8 +10,8 @@ import Button from '../components/Button';
 import Loader from '../components/Loader';
 import PageTransition from '../components/PageTransition';
 import RecipeCard from '../components/RecipeCard';
-import { generateWeeklyPlan, WeeklyPlanItem } from '../services/recipes';
-import { ingredientsAtom, recipesAtom } from '../store/atoms';
+import { generateWeeklyPlan } from '../services/recipes';
+import { ingredientsAtom, recipesAtom, weeklyPlanAtom } from '../store/atoms';
 import styles from './WeeklyPlanner.module.scss';
 
 export default function WeeklyPlanner() {
@@ -19,8 +19,9 @@ export default function WeeklyPlanner() {
   const [ingredients] = useAtom(ingredientsAtom);
   const setGlobalRecipes = useSetAtom(recipesAtom);
   
+  const [plan, setPlan] = useAtom(weeklyPlanAtom);
+  
   const [loading, setLoading] = useState(false);
-  const [plan, setPlan] = useState<WeeklyPlanItem[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const handleGeneratePlan = async () => {
@@ -53,48 +54,40 @@ export default function WeeklyPlanner() {
   };
 
   const downloadPDF = async () => {
-    const input = document.getElementById('weekly-plan-print-content');
-    if (!input) return;
-
-    // Temporarily make it visible for capture (opacity 0 -> 1 is not enough, needs to be rendered)
-    // It's already rendered but off-screen.
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = 210;
+    
+    // Show hidden container
+    const container = document.getElementById('pdf-generator-container');
+    if (!container) return;
+    
+    // We need to render the container visible for html2canvas to work best, 
+    // but we can keep it off-screen.
     
     try {
-      const canvas = await html2canvas(input, {
-        scale: 2,
-        backgroundColor: '#121212', // Match dark theme
-        useCORS: true,
-        windowWidth: 1200 // Force width
-      });
+      const recipeElements = container.getElementsByClassName('pdf-recipe-page');
       
-      // Calculate PDF dimensions
-      const imgWidth = 210; // A4 width in mm
-      const pageHeight = 295; // A4 height in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
+      for (let i = 0; i < recipeElements.length; i++) {
+        const element = recipeElements[i] as HTMLElement;
+        
+        const canvas = await html2canvas(element, {
+          scale: 2,
+          backgroundColor: '#1a1a1a', // Dark background for PDF
+          useCORS: true,
+          logging: false,
+          windowWidth: 800 // Fixed width for consistent rendering
+        });
 
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-
-      // Add first page
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      // Add subsequent pages if content overflows
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+        const imgData = canvas.toDataURL('image/png');
+        const imgHeight = (canvas.height * pageWidth) / canvas.width;
+        
+        if (i > 0) pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, imgHeight);
       }
       
-      pdf.save('mi-plan-semanal.pdf');
-      
-      return true;
+      pdf.save('Sabores-Universitarios-Plan-Semanal.pdf');
     } catch (err) {
-      console.error("PDF Export failed", err);
-      return false;
+      console.error("PDF generation failed", err);
     }
   };
 
@@ -159,51 +152,117 @@ export default function WeeklyPlanner() {
               ))}
             </div>
 
-            {/* Hidden container for PDF generation */}
+            {/* Hidden container for PDF generation - One block per recipe */}
             <div 
-                id="weekly-plan-print-content" 
+                id="pdf-generator-container" 
                 style={{ 
                     position: 'absolute', 
                     left: '-9999px',
                     top: 0,
-                    width: '1000px', // Fixed width for consistent PDF layout
-                    padding: '40px',
-                    background: '#121212',
-                    color: '#fff',
-                    fontFamily: 'sans-serif'
+                    width: '800px' // Fixed width for A4 ratio
                 }}
             >
-                <h1 style={{ textAlign: 'center', marginBottom: '40px', color: '#ff6b6b' }}>Mi Plan Semanal - Culinary AI</h1>
                 {plan.map((item, idx) => (
-                    <div key={idx} style={{ marginBottom: '50px', borderBottom: '1px solid #333', paddingBottom: '30px' }}>
-                        <h2 style={{ color: '#4ecdc4', fontSize: '24px', marginBottom: '10px' }}>{item.day}: {item.recipe.title}</h2>
-                        
-                        <div style={{ display: 'flex', gap: '20px', marginBottom: '20px', fontSize: '14px', color: '#888' }}>
-                            <span>⏱️ {item.recipe.prepTime} min</span>
-                            <span>👥 {item.recipe.servings} porciones</span>
+                    <div 
+                        key={idx} 
+                        className="pdf-recipe-page"
+                        style={{ 
+                            padding: '40px',
+                            background: '#1a1a1a', // Dark theme background
+                            color: '#e0e0e0',
+                            fontFamily: 'Inter, sans-serif',
+                            minHeight: '1120px', // Approx A4 height at this width
+                            display: 'flex',
+                            flexDirection: 'column'
+                        }}
+                    >
+                        {/* Header */}
+                        <div style={{ textAlign: 'center', marginBottom: '30px', borderBottom: '2px solid #ff6b6b', paddingBottom: '20px' }}>
+                            <h1 style={{ color: '#ff6b6b', margin: 0, fontSize: '28px' }}>Sabores Universitarios</h1>
+                            <p style={{ margin: '5px 0 0', opacity: 0.7 }}>Plan Semanal Inteligente</p>
                         </div>
 
-                        <p style={{ fontStyle: 'italic', marginBottom: '20px', color: '#ccc' }}>
-                            {item.recipe.description}
+                        {/* Recipe Title & Day */}
+                        <div style={{ marginBottom: '30px' }}>
+                             <span style={{ 
+                                 display: 'inline-block', 
+                                 background: '#4ecdc4', 
+                                 color: '#000', 
+                                 padding: '5px 15px', 
+                                 borderRadius: '20px', 
+                                 fontWeight: 'bold', 
+                                 marginBottom: '10px' 
+                             }}>
+                                {item.day}
+                             </span>
+                             <h2 style={{ fontSize: '32px', margin: '10px 0', color: '#fff' }}>{item.recipe.title}</h2>
+                             <div style={{ display: 'flex', gap: '20px', color: '#aaa', fontSize: '16px' }}>
+                                <span>⏱️ {item.recipe.prepTime} min</span>
+                                <span>👥 {item.recipe.servings} porciones</span>
+                                <span>📊 {item.recipe.nutrition?.calories || 'N/A'} Kcal</span>
+                             </div>
+                        </div>
+
+                        {/* Description */}
+                        <p style={{ fontStyle: 'italic', color: '#ccc', lineHeight: '1.5', marginBottom: '30px', background: '#252525', padding: '15px', borderRadius: '8px' }}>
+                            {item.recipe.description || item.rationale}
                         </p>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
+                        {/* Content Grid */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', marginBottom: '30px' }}>
+                            {/* Ingredients */}
                             <div>
-                                <h3 style={{ borderBottom: '1px solid #444', paddingBottom: '5px' }}>Ingredientes</h3>
-                                <ul style={{ listStyleType: 'disc', paddingLeft: '20px', marginTop: '10px' }}>
+                                <h3 style={{ borderBottom: '1px solid #444', paddingBottom: '10px', color: '#4ecdc4' }}>Ingredientes</h3>
+                                <ul style={{ paddingLeft: '20px', marginTop: '15px', lineHeight: '1.6' }}>
                                     {item.recipe.ingredients.map((ing, i) => (
                                         <li key={i} style={{ marginBottom: '5px' }}>{ing}</li>
                                     ))}
                                 </ul>
                             </div>
+
+                            {/* Nutrition & Tips */}
                             <div>
-                                <h3 style={{ borderBottom: '1px solid #444', paddingBottom: '5px' }}>Instrucciones</h3>
-                                <ol style={{ listStyleType: 'decimal', paddingLeft: '20px', marginTop: '10px' }}>
-                                    {item.recipe.instructions.map((inst, i) => (
-                                        <li key={i} style={{ marginBottom: '8px' }}>{inst}</li>
-                                    ))}
-                                </ol>
+                                <div style={{ marginBottom: '30px' }}>
+                                    <h3 style={{ borderBottom: '1px solid #444', paddingBottom: '10px', color: '#4ecdc4' }}>Nutrición (por porción)</h3>
+                                    {item.recipe.nutrition ? (
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '15px' }}>
+                                            <div style={{ background: '#252525', padding: '10px', borderRadius: '5px', textAlign: 'center' }}>
+                                                <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.recipe.nutrition.protein}</div>
+                                                <div style={{ fontSize: '12px', opacity: 0.7 }}>Proteína</div>
+                                            </div>
+                                            <div style={{ background: '#252525', padding: '10px', borderRadius: '5px', textAlign: 'center' }}>
+                                                <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.recipe.nutrition.carbs}</div>
+                                                <div style={{ fontSize: '12px', opacity: 0.7 }}>Carbs</div>
+                                            </div>
+                                            <div style={{ background: '#252525', padding: '10px', borderRadius: '5px', textAlign: 'center' }}>
+                                                <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.recipe.nutrition?.fat || 'N/A'}</div>
+                                                <div style={{ fontSize: '12px', opacity: 0.7 }}>Grasas</div>
+                                            </div>
+                                        </div>
+                                    ) : <p style={{ opacity: 0.5 }}>Información no disponible.</p>}
+                                </div>
+                                
+                                {item.recipe.tips && item.recipe.tips.length > 0 && (
+                                    <div>
+                                        <h3 style={{ borderBottom: '1px solid #444', paddingBottom: '10px', color: '#ffe66d' }}>Chef Tips</h3>
+                                        <ul style={{ paddingLeft: '20px', marginTop: '15px', fontSize: '14px', fontStyle: 'italic', color: '#e0e0e0' }}>
+                                            {item.recipe.tips.map((tip, i) => (
+                                                <li key={i} style={{ marginBottom: '5px' }}>{tip}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
+                        </div>
+
+                        {/* Instructions - Full width at bottom */}
+                        <div style={{ flex: 1 }}>
+                            <h3 style={{ borderBottom: '1px solid #444', paddingBottom: '10px', color: '#4ecdc4' }}>Instrucciones</h3>
+                            <ol style={{ paddingLeft: '20px', marginTop: '15px', lineHeight: '1.6' }}>
+                                {item.recipe.instructions.map((inst, i) => (
+                                    <li key={i} style={{ marginBottom: '10px' }}>{inst}</li>
+                                ))}
+                            </ol>
                         </div>
                     </div>
                 ))}
