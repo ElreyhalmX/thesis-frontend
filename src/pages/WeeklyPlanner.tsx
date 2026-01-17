@@ -1,18 +1,18 @@
 
 import { motion } from 'framer-motion';
+import html2canvas from 'html2canvas';
 import { useAtom, useSetAtom } from 'jotai';
-import { ArrowLeft, Calendar, Download, Loader2, Sparkles } from 'lucide-react';
+import jsPDF from 'jspdf';
+import { ArrowLeft, Calendar, Download, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
+import Loader from '../components/Loader';
 import PageTransition from '../components/PageTransition';
 import RecipeCard from '../components/RecipeCard';
 import { generateWeeklyPlan, WeeklyPlanItem } from '../services/recipes';
 import { ingredientsAtom, recipesAtom } from '../store/atoms';
 import styles from './WeeklyPlanner.module.scss';
-// PDF export will be added here
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
 export default function WeeklyPlanner() {
   const navigate = useNavigate();
@@ -53,24 +53,42 @@ export default function WeeklyPlanner() {
   };
 
   const downloadPDF = async () => {
-    const input = document.getElementById('weekly-plan-content');
+    const input = document.getElementById('weekly-plan-print-content');
     if (!input) return;
 
+    // Temporarily make it visible for capture (opacity 0 -> 1 is not enough, needs to be rendered)
+    // It's already rendered but off-screen.
+    
     try {
       const canvas = await html2canvas(input, {
         scale: 2,
         backgroundColor: '#121212', // Match dark theme
-        useCORS: true
+        useCORS: true,
+        windowWidth: 1200 // Force width
       });
       
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: [canvas.width, canvas.height]
-      });
+      // Calculate PDF dimensions
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 295; // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
 
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+
+      // Add first page
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // Add subsequent pages if content overflows
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      
       pdf.save('mi-plan-semanal.pdf');
       
       return true;
@@ -78,18 +96,6 @@ export default function WeeklyPlanner() {
       console.error("PDF Export failed", err);
       return false;
     }
-  };
-
-  const handleShare = async () => {
-    // Prompt download first
-    await downloadPDF();
-    
-    // Then open WhatsApp with text
-    const text = "📅 *Mi Plan Semanal - Culinary AI*\n\n" + 
-      "He generado mi menú semanal personalizado. ¡Descarga el PDF para verlo!\n\n" +
-      "Descubre más en: culinary-ai-app.com"; // Placeholder URL
-    
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   return (
@@ -109,11 +115,7 @@ export default function WeeklyPlanner() {
         </header>
 
         {loading ? (
-             <div className={styles.loadingState}>
-                <Loader2 className={`${styles.spinner} animate-spin`} size={48} />
-                <p>Diseñando tu menú semanal perfecto...</p>
-                <small>Esto puede tomar unos segundos.</small>
-             </div>
+             <Loader message="Diseñando tu menú semanal perfecto..." />
         ) : plan.length === 0 ? (
           <div className={styles.emptyState}>
             {ingredients.length === 0 ? (
@@ -134,8 +136,8 @@ export default function WeeklyPlanner() {
           <div className={styles.results} id="weekly-plan-content">
             <div className={styles.actions}>
               <h3>Tu Menú Semanal</h3>
-              <Button onClick={handleShare} variant="outline" className={styles.shareButton}>
-                <Download size={18} /> Descargar y Compartir
+              <Button onClick={downloadPDF} variant="outline" className={styles.shareButton}>
+                <Download size={18} /> Descargar Menú Semanal
               </Button>
             </div>
             
@@ -150,11 +152,61 @@ export default function WeeklyPlanner() {
                   <RecipeCard 
                     recipe={item.recipe}
                     dayBadge={item.day}
-                    onClick={() => navigate(`/recipe/${item.recipe.id}`)}
+                    onClick={() => navigate(`/recipe/${item.recipe.id}`, { state: { from: '/planner' } })}
                   />
-                  <p className={styles.rationaleSmall}>💡 {item.rationale}</p>
+                  {/* Eliminated the extra info lightbulb here */}
                 </motion.div>
               ))}
+            </div>
+
+            {/* Hidden container for PDF generation */}
+            <div 
+                id="weekly-plan-print-content" 
+                style={{ 
+                    position: 'absolute', 
+                    left: '-9999px',
+                    top: 0,
+                    width: '1000px', // Fixed width for consistent PDF layout
+                    padding: '40px',
+                    background: '#121212',
+                    color: '#fff',
+                    fontFamily: 'sans-serif'
+                }}
+            >
+                <h1 style={{ textAlign: 'center', marginBottom: '40px', color: '#ff6b6b' }}>Mi Plan Semanal - Culinary AI</h1>
+                {plan.map((item, idx) => (
+                    <div key={idx} style={{ marginBottom: '50px', borderBottom: '1px solid #333', paddingBottom: '30px' }}>
+                        <h2 style={{ color: '#4ecdc4', fontSize: '24px', marginBottom: '10px' }}>{item.day}: {item.recipe.title}</h2>
+                        
+                        <div style={{ display: 'flex', gap: '20px', marginBottom: '20px', fontSize: '14px', color: '#888' }}>
+                            <span>⏱️ {item.recipe.prepTime} min</span>
+                            <span>👥 {item.recipe.servings} porciones</span>
+                        </div>
+
+                        <p style={{ fontStyle: 'italic', marginBottom: '20px', color: '#ccc' }}>
+                            {item.recipe.description}
+                        </p>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
+                            <div>
+                                <h3 style={{ borderBottom: '1px solid #444', paddingBottom: '5px' }}>Ingredientes</h3>
+                                <ul style={{ listStyleType: 'disc', paddingLeft: '20px', marginTop: '10px' }}>
+                                    {item.recipe.ingredients.map((ing, i) => (
+                                        <li key={i} style={{ marginBottom: '5px' }}>{ing}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 style={{ borderBottom: '1px solid #444', paddingBottom: '5px' }}>Instrucciones</h3>
+                                <ol style={{ listStyleType: 'decimal', paddingLeft: '20px', marginTop: '10px' }}>
+                                    {item.recipe.instructions.map((inst, i) => (
+                                        <li key={i} style={{ marginBottom: '8px' }}>{inst}</li>
+                                    ))}
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
           </div>
         )}

@@ -1,10 +1,8 @@
 import { motion } from 'framer-motion'
-import html2canvas from 'html2canvas'
 import { useAtom } from 'jotai'
-import jsPDF from 'jspdf'
-import { ArrowLeft, CheckCircle, ChefHat, Clock, Download, Heart, Lightbulb, Share2, Users } from 'lucide-react'
+import { ArrowLeft, CheckCircle, ChefHat, Clock, Download, Heart, Lightbulb, Users } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Button from '../components/Button'
 import PageTransition from '../components/PageTransition'
 import apiClient from '../config/axios'
@@ -15,44 +13,22 @@ import styles from './RecipeView.module.scss'
 export default function RecipeView() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const [recipes] = useAtom(recipesAtom)
   const [, setHistory] = useAtom(historyAtom)
   const [liked, setLiked] = useState(false)
+  const [cooked, setCooked] = useState(false)
   const { capture, isCapturing } = useScreenshot()
 
   const recipe = recipes.find((r) => r.id === id)
 
   // ... (existing useEffect)
 
-  const downloadPDF = async () => {
-    const input = document.getElementById('recipe-content');
-    if (!input) return;
+  // downloadPDF removed as it was unused after removing share functionality.
 
-    try {
-      const canvas = await html2canvas(input, {
-        scale: 2,
-        backgroundColor: '#121212', // Match dark theme
-        useCORS: true
-      });
-      
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: [canvas.width, canvas.height]
-      });
-
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-      pdf.save(`${recipe?.title.replace(/\s+/g, '-').toLowerCase() || 'receta'}.pdf`);
-      return true;
-    } catch (err) {
-      console.error("PDF Export failed", err);
-      return false;
-    }
-  };
 
   const handleMarkCooked = () => {
-    if (!recipe) return;
+    if (!recipe || cooked) return;
     
     // Simulate savings: Restaurant ($6) - Home ($2) = $4 saved per serving * servings
     const estimatedSavings = 4 * recipe.servings;
@@ -65,19 +41,15 @@ export default function RecipeView() {
       estimatedSavings: estimatedSavings
     };
     
-    // We need to use useAtom for history. 
-    // Since we are inside the component loop, we should define useAtom(historyAtom) at top level.
     setHistory(prev => [...prev, newItem]);
     
-    // Visual feedback could be added here (toast)
-    alert("¡Receta registrada en tu historial! Ahorro estimado: $" + estimatedSavings);
-  };
-
-  const handleShare = async () => {
-    await downloadPDF();
-    const text = `🍽️ *${recipe?.title}*\n\n📝 Ingredientes: ${recipe?.ingredients.length}\n⏱️ Tiempo: ${recipe?.prepTime} min\n\nDescarga el PDF para ver la receta completa.\nVer más en Culinary AI!`;
-    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    window.open(url, '_blank');
+    // Toggle cooked state locally and persist (simple version)
+    setCooked(true);
+    const cookedRecipes = JSON.parse(localStorage.getItem('cookedRecipes') || '[]');
+    if (!cookedRecipes.includes(recipe.id)) {
+        cookedRecipes.push(recipe.id);
+        localStorage.setItem('cookedRecipes', JSON.stringify(cookedRecipes));
+    }
   };
 
   useEffect(() => {
@@ -86,8 +58,17 @@ export default function RecipeView() {
       if (likedRecipes.includes(id)) {
         setLiked(true)
       }
+      
+      const cookedRecipes = JSON.parse(localStorage.getItem('cookedRecipes') || '[]')
+      if (cookedRecipes.includes(id)) {
+        setCooked(true)
+      }
     }
   }, [id])
+
+  // Determine back destination
+  const backDestination = location.state?.from === '/planner' ? '/planner' : '/recipes';
+  const backLabel = location.state?.from === '/planner' ? 'Volver al Plan Semanal' : 'Volver a las recetas';
 
   if (!recipe) {
     return (
@@ -126,9 +107,9 @@ export default function RecipeView() {
   return (
     <PageTransition>
       <div className={styles.container}>
-        <button className={styles.backButton} onClick={() => navigate('/recipes')}>
+        <button className={styles.backButton} onClick={() => navigate(backDestination)}>
           <ArrowLeft size={20} />
-          Volver a las recetas
+          {backLabel}
         </button>
 
         <div className={styles.content} id="recipe-content">
@@ -153,11 +134,13 @@ export default function RecipeView() {
                   <Heart size={20} fill={liked ? "currentColor" : "none"} />
                 </button>
                 <button 
-                  className={styles.actionButton}
+                  className={`${styles.actionButton} ${cooked ? styles.active : ''}`}
                   onClick={handleMarkCooked}
-                  title="Marcar como cocinada (Agregar a Historial)"
+                  disabled={cooked}
+                  title={cooked ? "Ya cocinaste esto" : "Marcar como cocinada"}
+                  style={cooked ? { color: '#4ecdc4', borderColor: '#4ecdc4' } : {}}
                 >
-                  <CheckCircle size={20} />
+                  <CheckCircle size={20} fill={cooked ? "currentColor" : "none"} />
                 </button>
                 <button 
                   className={styles.actionButton}
@@ -166,13 +149,6 @@ export default function RecipeView() {
                   title="Save as image"
                 >
                   <Download size={20} />
-                </button>
-                <button 
-                  className={styles.actionButton}
-                  onClick={handleShare}
-                  title="Share on WhatsApp"
-                >
-                  <Share2 size={20} />
                 </button>
               </div>
             </div>
@@ -205,7 +181,7 @@ export default function RecipeView() {
             {recipe.nutrition && (
               <div className={styles.nutritionCard}>
                 <div className={styles.nutritionHeader}>
-                  Información Nutricional <span className={styles.nutritionSub}>(estimada)</span>
+                  Información Nutricional <span className={styles.nutritionSub}>(estimada por porción)</span>
                 </div>
                 <div className={styles.macros}>
                   <div className={styles.macro}>
