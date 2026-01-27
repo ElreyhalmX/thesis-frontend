@@ -119,7 +119,7 @@ export default function RecipeView() {
             className={styles.header}
           >
             <div className={styles.headerTop}>
-              <div style={{ flex: 1 }}>
+              <div className={styles.titleContainer}>
                 <h1 className={styles.title}>{recipe.title}</h1>
                 <span className={styles.difficulty}>{recipe.difficulty}</span>
               </div>
@@ -190,11 +190,11 @@ export default function RecipeView() {
                   </div>
                   <div className={styles.macro}>
                     <span className={styles.macroValue}>{recipe.nutrition.protein}</span>
-                    <span className={styles.macroLabel}>Prot</span>
+                    <span className={styles.macroLabel}>Proteínas</span>
                   </div>
                   <div className={styles.macro}>
                     <span className={styles.macroValue}>{recipe.nutrition.carbs}</span>
-                    <span className={styles.macroLabel}>Carbs</span>
+                    <span className={styles.macroLabel}>Carbohidratos</span>
                   </div>
                   <div className={styles.macro}>
                     <span className={styles.macroValue}>{recipe.nutrition.fat}</span>

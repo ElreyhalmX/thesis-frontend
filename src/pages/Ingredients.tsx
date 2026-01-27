@@ -100,9 +100,16 @@ export default function Ingredients() {
           >
             <div className={styles.inputWrapper}>
               <Input
-                placeholder="Escribe un ingrediente (ej. Pollo)"
+                placeholder="Escribe 1 ingrediente (ej. Pollo)"
                 value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val.includes(',')) {
+                    addIngredient();
+                  } else {
+                    setInputValue(val);
+                  }
+                }}
                 onKeyPress={handleKeyPress}
               />
               <Button onClick={addIngredient} className={styles.addButton}>
@@ -175,13 +182,14 @@ export default function Ingredients() {
               <ChevronRight size={20} />
             </Button>
             
-            <button 
-              className={styles.plainButton} 
+            <Button
+              size="lg"
+              variant="outline" 
               onClick={() => navigate('/planner')}
-              style={{ background: 'transparent', border: '1px solid var(--color-primary)', borderRadius: '99px', padding: '0.75rem 1.5rem', color: 'var(--color-primary)', cursor: 'pointer', fontWeight: 600 }}
+              className={styles.secondaryAction}
             >
               o Plan Semanal
-            </button>
+            </Button>
           </motion.div>
         </div>
       </div>

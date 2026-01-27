@@ -46,17 +46,7 @@ export default function Profile() {
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label>Nivel de Presupuesto (Simulación)</label>
-            <select 
-              value={profile.budgetLevel} 
-              onChange={(e) => setProfile({...profile, budgetLevel: e.target.value as any})}
-            >
-              <option value="Bajo">Bajo (Priorizar Ahorro)</option>
-              <option value="Medio">Medio</option>
-              <option value="Alto">Alto</option>
-            </select>
-          </div>
+
 
           <div className={styles.formGroup}>
             <label>Meta Nutricional</label>

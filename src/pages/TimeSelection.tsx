@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import {
     ArrowLeft,
     ChevronRight,
@@ -12,13 +12,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import PageTransition from "../components/PageTransition";
-import { cookingTimeAtom, portionsAtom } from "../store/atoms";
+import { cookingTimeAtom, portionsAtom, recipesAtom } from "../store/atoms";
 import styles from "./TimeSelection.module.scss";
 
 export default function TimeSelection() {
   const navigate = useNavigate();
   const [cookingTime, setCookingTime] = useAtom(cookingTimeAtom);
   const [portions, setPortions] = useAtom(portionsAtom);
+  const setRecipes = useSetAtom(recipesAtom);
 
   const timeOptions = [
     {
@@ -45,6 +46,7 @@ export default function TimeSelection() {
   ];
 
   const handleContinue = async () => {
+    setRecipes([]); // Clear previous recipes to force regeneration
     navigate("/recipes");
   };
 

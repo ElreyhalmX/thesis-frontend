@@ -41,7 +41,7 @@
 }
 
 .macroValue {
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-primary);
 }
@@ -144,11 +144,19 @@
   }
 }
 
+.titleContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
 .title {
   font-size: 2.5rem;
   font-weight: 700;
   margin: 0;
-  flex: 1;
+  line-height: 1.2;
 
   @media (max-width: 768px) {
     font-size: 2rem;
