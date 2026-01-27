@@ -1,19 +1,20 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { AlertCircle, ArrowLeft, ChevronRight, Plus, X } from "lucide-react";
 import { type KeyboardEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import PageTransition from "../components/PageTransition";
-import { ingredientsAtom } from "../store/atoms";
+import { ingredientsAtom, weeklyPlanAtom } from "../store/atoms";
 import styles from "./Ingredients.module.scss";
 
 export default function Ingredients() {
   const navigate = useNavigate();
   const [ingredients, setIngredients] = useAtom(ingredientsAtom);
+  const setWeeklyPlan = useSetAtom(weeklyPlanAtom);
   const [inputValue, setInputValue] = useState("");
 
   const addIngredient = () => {
@@ -185,7 +186,10 @@ export default function Ingredients() {
             <Button
               size="lg"
               variant="outline" 
-              onClick={() => navigate('/planner')}
+              onClick={() => {
+                setWeeklyPlan([]); // Force new generation
+                navigate('/planner');
+              }}
               className={styles.secondaryAction}
             >
               o Plan Semanal

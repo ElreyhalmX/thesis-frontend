@@ -82,6 +82,10 @@ export default function WeeklyPlanner() {
 
          // Always start a new recipe on a new page (except the very first one)
          if (i > 0) pdf.addPage();
+         
+         // 2. Set Page Background to Dark to avoid white gaps
+         pdf.setFillColor(26, 26, 26); // #1a1a1a
+         pdf.rect(0, 0, pageWidth, pageHeight, "F");
 
          // Add first chunk
          pdf.addImage(imgData, 'JPEG', 0, position, pageWidth, imgHeight);
@@ -91,6 +95,11 @@ export default function WeeklyPlanner() {
          while (heightLeft > 0) {
              position -= pageHeight; // Move the image up
              pdf.addPage();
+             
+             // Background for subsequent pages too
+             pdf.setFillColor(26, 26, 26);
+             pdf.rect(0, 0, pageWidth, pageHeight, "F");
+             
              pdf.addImage(imgData, 'JPEG', 0, position, pageWidth, imgHeight);
              heightLeft -= pageHeight;
          }
