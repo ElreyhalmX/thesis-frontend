@@ -1,7 +1,6 @@
-import { ChefHat, Clock, Users } from "lucide-react";
+import { ChefHat, Clock, Loader2, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import apiClient from "../config/axios";
-import { getRecipeImage } from "../utils/imageMapper";
 import Button from "./Button";
 import styles from "./RecipeCard.module.scss";
 
@@ -20,38 +19,34 @@ interface RecipeCardProps {
 }
 
 export default function RecipeCard({ recipe, onClick, dayBadge }: RecipeCardProps) {
-  // Strategy: 
-  // 1. Show Instant Real Stock Photo (mapped) initially for zero perceived latency.
-  // 2. Async fetch the "Authentic AI" image from backend if requested.
-  // 3. Swap when ready.
-  
-  const [image, setImage] = useState(getRecipeImage(recipe.title, recipe.id));
+  const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let mounted = true;
+
+    // Check session storage first
+    const cached = sessionStorage.getItem(`img_gen_${recipe.id}`);
+    if (cached) {
+        setImage(cached);
+        setLoading(false);
+        return;
+    }
+
     const fetchAIImage = async () => {
         try {
-            // Check if we already have it cached to avoid duplicate gens
-            const cached = sessionStorage.getItem(`img_gen_${recipe.id}`);
-            if (cached) {
-                if (mounted) setImage(cached);
-                return;
-            }
-
             const response = await apiClient.post('/images/generate', { title: recipe.title });
             if (response.data && response.data.image && mounted) {
                 setImage(response.data.image);
                 sessionStorage.setItem(`img_gen_${recipe.id}`, response.data.image);
             }
         } catch (error) {
-            console.error("AI Image Gen failed, keeping stock photo", error);
+            console.error("AI Image Gen failed", error);
         } finally {
             if (mounted) setLoading(false);
         }
     };
 
-    // Trigger AI generation
     fetchAIImage();
 
     return () => { mounted = false; };
@@ -62,12 +57,22 @@ export default function RecipeCard({ recipe, onClick, dayBadge }: RecipeCardProp
       {dayBadge && <div className={styles.dayBadge}>{dayBadge}</div>}
       
       <div className={styles.cardImageContainer}>
-        <img 
-          src={image} 
-          alt={recipe.title} 
-          className={styles.cardImage} 
-          loading="lazy"
-        />
+        {loading ? (
+             <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f0f0f0' }}>
+                 <Loader2 className="animate-spin" size={24} color="#888" />
+             </div>
+        ) : image ? (
+            <img 
+            src={image} 
+            alt={recipe.title} 
+            className={styles.cardImage} 
+            loading="lazy"
+            />
+        ) : (
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#eee' }}>
+                <ChefHat size={32} color="#ccc" />
+            </div>
+        )}
         <span className={styles.difficultyBadge}>{recipe.difficulty}</span>
       </div>
 
