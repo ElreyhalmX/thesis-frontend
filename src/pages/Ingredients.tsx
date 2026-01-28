@@ -79,16 +79,16 @@ export default function Ingredients() {
           >
             <AlertCircle size={20} />
             <div>
-              <h3 className={styles.infoTitle}>Cómo funcionan las recetas</h3>
+            <h3 className={styles.infoTitle}>Cómo funciona</h3>
               <p className={styles.infoText}>
-                Usaremos{" "}
-                <strong>únicamente los ingredientes que agregues</strong> más
-                condimentos básicos (sal, aceite, ajo, pimienta, , comino y
-                agua). No necesitas agregar estos.
+                La IA usará <strong>ESTRICTAMENTE las cantidades que indiques</strong>.
+                Si tienes poco, te ayudará a rendirlo.
+                <br />
+                <br />
+                Ejemplo: "200g carne", "1/2 Harina".
               </p>
               <p className={styles.recommendedText}>
-                Te recomendamos agregar <strong>al menos 3 ingredientes</strong>{" "}
-                para mejores resultados.
+                No agregues sal, agua o aceite (ya se asumen).
               </p>
             </div>
           </motion.div>
@@ -101,14 +101,17 @@ export default function Ingredients() {
           >
             <div className={styles.inputWrapper}>
               <Input
-                placeholder="Escribe 1 ingrediente (ej. Pollo)"
+                placeholder="Ej: 1kg Harina PAN, 3 huevos..."
                 value={inputValue}
                 onChange={(e) => {
                   const val = e.target.value;
-                  if (val.includes(',')) {
+                  // Allow letters, numbers, spaces, commas, dots, and accents
+                  const cleanVal = val.replace(/[^a-zA-Z0-9\s,.\u00C0-\u00FFñÑ]/g, "");
+                  
+                  if (cleanVal.includes(',')) {
                     addIngredient();
                   } else {
-                    setInputValue(val);
+                    setInputValue(cleanVal);
                   }
                 }}
                 onKeyPress={handleKeyPress}

@@ -60,6 +60,19 @@ export default function Landing() {
           >
             <ChefHat size={48} />
           </motion.div>
+
+          <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.3 }}
+             style={{ margin: '2rem 0', borderRadius: '1rem', overflow: 'hidden', maxWidth: '800px', width: '100%' }}
+          >
+             <img 
+               src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=2670&auto=format&fit=crop" 
+               alt="Cocina Venezolana"
+               style={{ width: '100%', height: 'auto', maxHeight: '300px', objectFit: 'cover' }} 
+             />
+          </motion.div>
           
           <motion.h1
             initial={{ opacity: 0, y: 20 }}

@@ -114,6 +114,19 @@ export default function RecipeView() {
 
         <div className={styles.content} id="recipe-content">
           <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className={styles.heroImageContainer}
+            style={{ marginBottom: '2rem', borderRadius: '1rem', overflow: 'hidden', height: '300px' }}
+          >
+             <img 
+               src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop" 
+               alt="Comida Venezolana" 
+               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+             />
+          </motion.div>
+
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className={styles.header}
