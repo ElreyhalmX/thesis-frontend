@@ -8,6 +8,7 @@ import PageTransition from '../components/PageTransition'
 import apiClient from '../config/axios'
 import { useScreenshot } from '../hooks/useScreenshot'
 import { historyAtom, recipesAtom } from '../store/atoms'
+import { getRecipeImage } from '../utils/imageMapper'
 import styles from './RecipeView.module.scss'
 
 export default function RecipeView() {
@@ -120,8 +121,8 @@ export default function RecipeView() {
             style={{ marginBottom: '2rem', borderRadius: '1rem', overflow: 'hidden', height: '300px' }}
           >
              <img 
-               src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop" 
-               alt="Comida Venezolana" 
+               src={recipe ? getRecipeImage(recipe.title, recipe.id) : ''}
+               alt={recipe.title} 
                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
              />
           </motion.div>
