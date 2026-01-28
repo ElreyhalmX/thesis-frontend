@@ -1,4 +1,6 @@
 import { ChefHat, Clock, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import apiClient from "../config/axios";
 import { getRecipeImage } from "../utils/imageMapper";
 import Button from "./Button";
 import styles from "./RecipeCard.module.scss";
@@ -18,8 +20,42 @@ interface RecipeCardProps {
 }
 
 export default function RecipeCard({ recipe, onClick, dayBadge }: RecipeCardProps) {
-  // Use mapped Real Stock Images (Photography)
-  const image = getRecipeImage(recipe.title, recipe.id);
+  // Strategy: 
+  // 1. Show Instant Real Stock Photo (mapped) initially for zero perceived latency.
+  // 2. Async fetch the "Authentic AI" image from backend if requested.
+  // 3. Swap when ready.
+  
+  const [image, setImage] = useState(getRecipeImage(recipe.title, recipe.id));
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    const fetchAIImage = async () => {
+        try {
+            // Check if we already have it cached to avoid duplicate gens
+            const cached = sessionStorage.getItem(`img_gen_${recipe.id}`);
+            if (cached) {
+                if (mounted) setImage(cached);
+                return;
+            }
+
+            const response = await apiClient.post('/images/generate', { title: recipe.title });
+            if (response.data && response.data.image && mounted) {
+                setImage(response.data.image);
+                sessionStorage.setItem(`img_gen_${recipe.id}`, response.data.image);
+            }
+        } catch (error) {
+            console.error("AI Image Gen failed, keeping stock photo", error);
+        } finally {
+            if (mounted) setLoading(false);
+        }
+    };
+
+    // Trigger AI generation
+    fetchAIImage();
+
+    return () => { mounted = false; };
+  }, [recipe.title, recipe.id]);
 
   return (
     <div className={styles.card} onClick={onClick}>

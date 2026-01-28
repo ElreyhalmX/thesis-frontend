@@ -121,8 +121,15 @@ export default function RecipeView() {
             style={{ marginBottom: '2rem', borderRadius: '1rem', overflow: 'hidden', height: '300px' }}
           >
              <img 
-               src={recipe ? getRecipeImage(recipe.title, recipe.id) : ''}
-               alt={recipe.title} 
+               src={(() => {
+                   // Priority: 1. AI Image Cached, 2. Mapped Image
+                   if (recipe) {
+                       const cached = sessionStorage.getItem(`img_gen_${recipe.id}`);
+                       return cached || getRecipeImage(recipe.title, recipe.id);
+                   }
+                   return '';
+               })()}
+               alt={recipe?.title || ''} 
                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
              />
           </motion.div>
