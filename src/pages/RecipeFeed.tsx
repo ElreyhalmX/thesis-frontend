@@ -31,7 +31,10 @@ export default function RecipeFeed() {
   useQuery({
     queryKey: ["generateRecipes"],
     queryFn: fetchRecipes,
-    enabled: recipes.length === 0 && !isLoading && !error,
+    enabled: recipes.length === 0 && !isLoading && !error && ingredients.length > 0,
+    staleTime: Infinity, // Keep data fresh forever until manually invalidated
+    refetchOnWindowFocus: false,
+    refetchOnMount: false
   });
 
   async function fetchRecipes() {

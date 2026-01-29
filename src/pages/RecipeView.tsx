@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useAtom } from 'jotai'
-import { ArrowLeft, CheckCircle, ChefHat, Clock, Download, Heart, Lightbulb, Users } from 'lucide-react'
+import { ArrowLeft, CheckCircle, ChefHat, Clock, Download, Heart, Lightbulb, Loader2, Users } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Button from '../components/Button'
@@ -8,7 +8,6 @@ import PageTransition from '../components/PageTransition'
 import apiClient from '../config/axios'
 import { useScreenshot } from '../hooks/useScreenshot'
 import { historyAtom, recipesAtom } from '../store/atoms'
-import { getRecipeImage } from '../utils/imageMapper'
 import styles from './RecipeView.module.scss'
 
 export default function RecipeView() {
@@ -19,9 +18,30 @@ export default function RecipeView() {
   const [, setHistory] = useAtom(historyAtom)
   const [liked, setLiked] = useState(false)
   const [cooked, setCooked] = useState(false)
+  const [aiImage, setAiImage] = useState<string | null>(null)
   const { capture, isCapturing } = useScreenshot()
 
   const recipe = recipes.find((r) => r.id === id)
+
+  useEffect(() => {
+    if (recipe) {
+        // Try cache first
+        const cached = sessionStorage.getItem(`img_gen_${recipe.id}`);
+        if (cached) {
+            setAiImage(cached);
+        } else {
+            // Fetch if not cached
+             apiClient.post('/images/generate', { title: recipe.title })
+                .then(res => {
+                    if (res.data?.image) {
+                        setAiImage(res.data.image);
+                        sessionStorage.setItem(`img_gen_${recipe.id}`, res.data.image);
+                    }
+                })
+                .catch(err => console.error("View Image Gen Error", err));
+        }
+    }
+  }, [recipe]);
 
   // ... (existing useEffect)
 
@@ -120,18 +140,18 @@ export default function RecipeView() {
             className={styles.heroImageContainer}
             style={{ marginBottom: '2rem', borderRadius: '1rem', overflow: 'hidden', height: '300px' }}
           >
-             <img 
-               src={(() => {
-                   // Priority: 1. AI Image Cached, 2. Mapped Image
-                   if (recipe) {
-                       const cached = sessionStorage.getItem(`img_gen_${recipe.id}`);
-                       return cached || getRecipeImage(recipe.title, recipe.id);
-                   }
-                   return '';
-               })()}
-               alt={recipe?.title || ''} 
-               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-             />
+             {aiImage ? (
+                <img 
+                src={aiImage}
+                alt={recipe.title} 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+             ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+                    <Loader2 className="animate-spin" size={48} color="#aaa" />
+                    <span style={{ fontSize: '0.9rem', color: '#666' }}>Generando imagen única...</span>
+                </div>
+             )}
           </motion.div>
 
           <motion.div
