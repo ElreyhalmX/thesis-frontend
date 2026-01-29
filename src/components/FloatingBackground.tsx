@@ -47,7 +47,7 @@ export default function FloatingBackground() {
               top: `${initialY}%`
             }}
             animate={{ 
-              opacity: [0.03, 0.1, 0.03], 
+              opacity: [0.1, 0.2, 0.1], 
               // Float around the initial position
               x: [0, moveX, 0],
               y: [0, moveY, 0],
@@ -80,7 +80,7 @@ export default function FloatingBackground() {
           bottom: 0,
           backgroundImage: 'radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)',
           backgroundSize: '30px 30px',
-          opacity: 0.9
+          opacity: 0.1
         }}
       />
     </div>
