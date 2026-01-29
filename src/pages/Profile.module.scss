@@ -27,7 +27,7 @@
     .iconWrapper {
         display: inline-flex;
         padding: 1rem;
-        background: rgba(var(--primary-rgb), 0.1);
+        background: rgba(199, 21, 133, 0.1);
         border-radius: 50%;
         margin-bottom: 1rem;
         color: var(--color-primary);
@@ -36,18 +36,20 @@
     h1 {
         font-size: 2.5rem;
         margin-bottom: 0.5rem;
+        color: var(--color-foreground);
     }
 
     p {
         color: var(--color-accent);
+        font-size: 1rem;
     }
 }
 
 .formContainer {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--color-muted);
+    border: 1.5px solid var(--color-border);
     padding: 2rem;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -60,30 +62,31 @@
 
     label {
         font-size: 0.9rem;
-        color: var(--color-accent);
-        font-weight: 500;
+        color: var(--color-foreground);
+        font-weight: 600;
     }
 
     input,
     select {
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
+        background: var(--color-background);
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-md);
         padding: 0.75rem 1rem;
-        color: #fff;
+        color: var(--color-foreground);
         font-size: 1rem;
         outline: none;
         transition: all 0.2s;
 
         &:focus {
             border-color: var(--color-primary);
-            box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
+            box-shadow: 0 0 0 3px rgba(199, 21, 133, 0.1);
+            background-color: var(--color-muted);
         }
 
-        // Select dropdown dark mode fix
+        // Select dropdown light mode fix
         option {
-            background: #1a1a1a;
-            color: #fff;
+            background: var(--color-muted);
+            color: var(--color-foreground);
         }
     }
 }

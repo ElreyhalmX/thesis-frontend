@@ -23,10 +23,10 @@
   justify-content: center;
   width: 5rem;
   height: 5rem;
-  background-color: var(--color-foreground);
-  color: var(--color-background);
+  background-color: var(--color-primary);
+  color: #ffffff;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 10px 25px rgba(199, 21, 133, 0.2);
 }
 
 .title {
@@ -87,7 +87,10 @@
 .statValue {
   font-size: 2.5rem;
   font-weight: 800;
-  color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary), #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   line-height: 1;
 }
 
@@ -146,7 +149,8 @@
   justify-content: center;
   width: 3rem;
   height: 3rem;
-  background-color: var(--color-muted);
+  background-color: rgba(199, 21, 133, 0.1);
+  color: var(--color-primary);
   border-radius: var(--radius-md);
   margin-bottom: var(--spacing-md);
 }
@@ -183,20 +187,22 @@
 }
 
 .navButton {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
   padding: 0.5rem 1rem;
   border-radius: 20px;
-  color: #fff;
+  color: #ffffff;
   cursor: pointer;
   font-size: 0.9rem;
-  font-weight: 500;
-  backdrop-filter: blur(10px);
+  font-weight: 600;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(199, 21, 133, 0.15);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: #b0106f;
+    border-color: #b0106f;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(199, 21, 133, 0.25);
   }
 
   @media (max-width: 640px) {

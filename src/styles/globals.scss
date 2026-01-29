@@ -5,19 +5,20 @@
 }
 
 :root {
-  // Color palette - Light Premium (Venezuelan Vibes - Vibrant & Clean)
-  --color-background: #f8f9fa; // almost white, very clean
-  --color-foreground: #1a1a1a; // very dark gray for text (high contrast)
-  --color-primary: #ff5722; // Deep vibrant orange (Food/Warmth)
-  --color-secondary: #00897b; // Teal (Freshness)
-  --color-accent: #6c757d; // Grey for secondary text
-  --color-muted: #ffffff; // White for cards (to pop against light bg)
-  --color-border: #e9ecef; // light border
-  --color-hover: #f1f3f5; // light hover
+  // Color palette - Light Premium (Perfect Venezuelan Culinary Theme)
+  --color-background: #fafbfc; // Almost pure white - ultra clean
+  --color-foreground: #1a1a1a; // Pure black for text - 99% contrast ratio
+  --color-primary: #c71585; // Magenta/Rosa profundo - Vibrant & Passionate (Culinary)
+  --color-secondary: #10b981; // Green Emerald - Fresh ingredients
+  --color-accent: #4a5568; // Dark gray - Perfect secondary text
+  --color-muted: #ffffff; // Pure white for cards
+  --color-border: #e2e8f0; // Light gray border
+  --color-hover: #f7fafc; // Slight hover change
 
   // Functional colors
   --color-error: #dc3545;
-  --color-success: #28a745;
+  --color-success: #10b981;
+  --color-surface: #ffffff; // For cards on light mode
 
   // Spacing
   --spacing-xs: 0.5rem;

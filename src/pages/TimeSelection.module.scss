@@ -109,10 +109,11 @@
   justify-content: center;
   width: 3.5rem;
   height: 3.5rem;
-  background-color: var(--color-foreground);
-  color: var(--color-background);
+  background-color: var(--color-primary);
+  color: #ffffff;
   border-radius: var(--radius-md);
   flex-shrink: 0;
+  font-weight: 600;
 }
 
 .optionContent {
@@ -124,9 +125,9 @@
 
 .optionLabel {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0;
-  color: var(--color-primary);
+  color: var(--color-foreground);
 }
 
 .optionSubtitle {
@@ -154,14 +155,14 @@
   transition: all 0.2s ease;
 
   &.radioSelected {
-    border-color: var(--color-foreground);
+    border-color: var(--color-primary);
   }
 }
 
 .radioInner {
   width: 0.75rem;
   height: 0.75rem;
-  background-color: var(--color-foreground);
+  background-color: var(--color-primary);
   border-radius: 50%;
 }
 
@@ -226,27 +227,30 @@
   cursor: pointer;
   transition: all 0.2s ease;
   padding: 0;
+  font-weight: 600;
 
   &:hover {
     background-color: var(--color-primary);
-    color: var(--color-background);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(199, 21, 133, 0.2);
   }
 }
 
 .portionsInput {
   font-family: var(--font-family);
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
   padding: var(--spacing-xs) var(--spacing-sm);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
   width: 5rem;
   text-align: center;
   background-color: var(--color-background);
-  color: var(--color-foreground);
+  color: var(--color-primary);
 
   &:focus {
     outline: none;
-    border-color: var(--color-foreground);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(199, 21, 133, 0.1);
   }
 }
