@@ -80,7 +80,7 @@ export default function FloatingBackground() {
           bottom: 0,
           backgroundImage: 'radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)',
           backgroundSize: '30px 30px',
-          opacity: 0.5
+          opacity: 0.9
         }}
       />
     </div>
