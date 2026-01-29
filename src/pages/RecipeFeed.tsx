@@ -75,6 +75,14 @@ export default function RecipeFeed() {
     handleRetry();
     setRecipes([]);
     setIngredients([]);
+    
+    // Clear AI Image Cache
+    Object.keys(sessionStorage).forEach((key) => {
+        if (key.startsWith('img_gen_')) {
+            sessionStorage.removeItem(key);
+        }
+    });
+
     navigate("/ingredients");
   };
 
