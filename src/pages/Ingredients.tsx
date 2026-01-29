@@ -105,8 +105,8 @@ export default function Ingredients() {
                 value={inputValue}
                 onChange={(e) => {
                   const val = e.target.value;
-                  // Allow letters, numbers, spaces, commas, dots, and accents
-                  const cleanVal = val.replace(/[^a-zA-Z0-9\s,.\u00C0-\u00FFñÑ]/g, "");
+                  // Allow letters, numbers, spaces, commas, dots, accents, and forward slash (for fractions)
+                  const cleanVal = val.replace(/[^a-zA-Z0-9\s,.\u00C0-\u00FFñÑ\/]/g, "");
                   
                   if (cleanVal.includes(',')) {
                     addIngredient();

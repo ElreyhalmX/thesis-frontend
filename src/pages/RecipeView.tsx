@@ -52,8 +52,9 @@ export default function RecipeView() {
   const handleMarkCooked = () => {
     if (!recipe || cooked) return;
     
-    // Simulate savings: Restaurant ($6) - Home ($2) = $4 saved per serving * servings
-    const estimatedSavings = 4 * recipe.servings;
+    // Simulate savings: Restaurant ($13) - Home ($3) = $10 saved per serving * servings
+    // User feedback: Street food is expensive (> $8). Using conservative $10 saving.
+    const estimatedSavings = 10 * recipe.servings;
     
     const newItem = {
       id: `history-${Date.now()}`,
