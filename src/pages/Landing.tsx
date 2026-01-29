@@ -3,6 +3,9 @@ import { ChefHat, Clock, DollarSign, Sparkles } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 import PageTransition from '../components/PageTransition'
+import ImageCarousel from '../components/ImageCarousel'
+import Testimonials from '../components/Testimonials'
+import CookingTips from '../components/CookingTips'
 import { useStats } from '../hooks/useStats'
 import styles from './Landing.module.scss'
 
@@ -64,11 +67,11 @@ export default function Landing() {
           <motion.div
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
-             transition={{ delay: 0.3 }}
+             transition={{ delay: 0.4 }}
              style={{ margin: '2rem 0', borderRadius: '1rem', overflow: 'hidden', maxWidth: '800px', width: '100%' }}
           >
              <img 
-               src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=2670&auto=format&fit=crop" 
+               src="/landing-hero-1.jpg" 
                alt="Cocina Venezolana"
                style={{ width: '100%', height: 'auto', maxHeight: '300px', objectFit: 'cover' }} 
              />
@@ -149,6 +152,12 @@ export default function Landing() {
             </motion.div>
           ))}
         </motion.div>
+
+        <ImageCarousel />
+
+        <Testimonials />
+
+        <CookingTips />
       </div>
     </PageTransition>
   )

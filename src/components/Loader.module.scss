@@ -16,21 +16,31 @@
 .spinner {
   width: 4rem;
   height: 4rem;
-  border: 3px solid var(--color-muted);
-  border-top-color: var(--color-foreground);
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: spin 1s linear infinite;
 }
 
 .spinnerInner {
   width: 2rem;
   height: 2rem;
-  border: 2px solid var(--color-border);
-  border-top-color: var(--color-accent);
+  border: 2px solid var(--color-secondary);
+  border-top-color: var(--color-primary);
   border-radius: 50%;
   animation: spinReverse 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spinReverse {
@@ -44,7 +54,9 @@
 
 .message {
   font-size: 1rem;
-  font-weight: 500;
-  color: var(--color-accent);
+  font-weight: 600;
+  color: var(--color-foreground);
   text-align: center;
+  max-width: 32rem;
+  line-height: 1.6;
 }

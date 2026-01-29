@@ -178,7 +178,6 @@ export default function RecipeView() {
                   onClick={handleMarkCooked}
                   disabled={cooked}
                   title={cooked ? "Ya cocinaste esto" : "Marcar como cocinada"}
-                  style={cooked ? { color: '#4ecdc4', borderColor: '#4ecdc4' } : {}}
                 >
                   <CheckCircle size={20} fill={cooked ? "currentColor" : "none"} />
                 </button>
