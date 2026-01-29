@@ -1,8 +1,10 @@
+```typescript
 import { ChefHat, Clock, Loader2, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import apiClient from "../config/axios";
 import Button from "./Button";
 import styles from "./RecipeCard.module.scss";
+import Skeleton from "./Skeleton";
 
 interface RecipeCardProps {
   recipe: {
@@ -58,9 +60,7 @@ export default function RecipeCard({ recipe, onClick, dayBadge }: RecipeCardProp
       
       <div className={styles.cardImageContainer}>
         {loading ? (
-             <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f0f0f0' }}>
-                 <Loader2 className="animate-spin" size={24} color="#888" />
-             </div>
+             <Skeleton height="100%" />
         ) : image ? (
             <img 
             src={image} 

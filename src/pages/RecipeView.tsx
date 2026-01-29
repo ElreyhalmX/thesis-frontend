@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion'
 import { useAtom } from 'jotai'
-import { ArrowLeft, CheckCircle, ChefHat, Clock, Download, Heart, Lightbulb, Loader2, Users } from 'lucide-react'
+import { ArrowLeft, CheckCircle, ChefHat, Clock, Download, Heart, Lightbulb, Users } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Button from '../components/Button'
 import PageTransition from '../components/PageTransition'
+import Skeleton from '../components/Skeleton'
 import apiClient from '../config/axios'
 import { useScreenshot } from '../hooks/useScreenshot'
 import { historyAtom, recipesAtom } from '../store/atoms'
@@ -147,10 +148,7 @@ export default function RecipeView() {
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-                    <Loader2 className="animate-spin" size={48} color="#aaa" />
-                    <span style={{ fontSize: '0.9rem', color: '#666' }}>Generando imagen única...</span>
-                </div>
+                <Skeleton height="100%" />
              )}
           </motion.div>
 
