@@ -92,7 +92,7 @@ export default function ImageCarousel() {
   return (
     <section className={styles.carouselContainer}>
       <div className={styles.carouselWrapper}>
-        <AnimatePresence mode="fade">
+        <AnimatePresence mode="wait">
           <motion.div
             key={currentImage.id}
             initial={{ opacity: 0 }}
