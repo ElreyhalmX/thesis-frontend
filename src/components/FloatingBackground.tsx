@@ -32,7 +32,7 @@ export default function FloatingBackground() {
         zIndex: -1,
         overflow: 'hidden',
         pointerEvents: 'none',
-        background: 'radial-gradient(circle at 50% 50%, var(--color-muted) 0%, var(--color-background) 100%)'
+        background: 'none'
       }}
     >
       {particles.map((particle, i) => {
