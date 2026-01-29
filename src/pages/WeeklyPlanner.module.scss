@@ -28,7 +28,7 @@
     .iconWrapper {
         display: inline-flex;
         padding: 1rem;
-        background: rgba(var(--primary-rgb), 0.1);
+        background: rgba(199, 21, 133, 0.1);
         border-radius: 50%;
         margin-bottom: 1rem;
         color: var(--color-primary);
@@ -37,6 +37,7 @@
     h1 {
         font-size: 2.5rem;
         margin-bottom: 0.5rem;
+        color: var(--color-foreground);
     }
 
     p {
@@ -53,13 +54,14 @@
     gap: 2rem;
     text-align: center;
     padding: 4rem;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 20px;
-    border: 1px dashed rgba(255, 255, 255, 0.1);
+    background: var(--color-background);
+    border-radius: var(--radius-lg);
+    border: 2px dashed var(--color-border);
 
     .hint {
         font-size: 0.8rem;
-        color: #ef4444;
+        color: var(--color-error);
+        font-weight: 500;
     }
 }
 
@@ -86,17 +88,18 @@
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--color-muted);
+    border: 1.5px solid var(--color-border);
     padding: 1.5rem;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     position: relative;
     overflow: hidden;
 
     &:hover {
-        background: rgba(255, 255, 255, 0.08);
+        background: var(--color-background);
         transform: translateY(-2px);
         transition: all 0.2s;
+        border-color: var(--color-primary);
     }
 }
 
@@ -105,19 +108,21 @@
     top: 0;
     right: 0;
     background: var(--color-primary);
-    color: #000;
+    color: #ffffff;
     font-weight: bold;
-    padding: 0.25rem 1rem;
-    border-bottom-left-radius: 12px;
-    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    border-bottom-left-radius: var(--radius-md);
+    font-size: 0.75rem;
     text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(199, 21, 133, 0.15);
 }
 
 .rationale {
-    font-size: 0.9rem;
-    color: var(--color-accent);
+    font-size: 0.95rem;
+    color: var(--color-foreground);
     margin-bottom: 1rem;
-    line-height: 1.4;
+    line-height: 1.5;
+    font-weight: 500;
 }
 
 .miniIngredients {
@@ -127,10 +132,11 @@
 
     span {
         font-size: 0.75rem;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 2px 8px;
-        border-radius: 4px;
-        color: rgba(255, 255, 255, 0.8);
+        background: rgba(199, 21, 133, 0.08);
+        padding: 4px 10px;
+        border-radius: var(--radius-sm);
+        color: var(--color-primary);
+        font-weight: 500;
     }
 }
 
