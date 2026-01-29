@@ -28,6 +28,8 @@
     height: 160px;
     position: relative;
     overflow: hidden;
+    background-color: #f0f0f0; // Fallback background
+    display: block; // Ensure block level
 }
 
 .cardImage {

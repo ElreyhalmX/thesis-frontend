@@ -1,5 +1,4 @@
-```typescript
-import { ChefHat, Clock, Loader2, Users } from "lucide-react";
+import { ChefHat, Clock, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import apiClient from "../config/axios";
 import Button from "./Button";
