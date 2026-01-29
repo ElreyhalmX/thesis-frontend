@@ -23,10 +23,10 @@
   justify-content: center;
   width: 5rem;
   height: 5rem;
-  background-color: var(--color-primary);
+  background: linear-gradient(135deg, #ff9f1c, #ffbf69);
   color: #ffffff;
   border-radius: var(--radius-lg);
-  box-shadow: 0 10px 25px rgba(199, 21, 133, 0.2);
+  box-shadow: 0 12px 30px rgba(255, 159, 28, 0.35);
 }
 
 .title {
@@ -53,6 +53,14 @@
 
 .ctaButton {
   margin-top: var(--spacing-sm);
+  background: linear-gradient(135deg, #ff9f1c, #ffbf69) !important;
+  border: none !important;
+  box-shadow: 0 8px 20px rgba(255, 159, 28, 0.3) !important;
+
+  &:hover {
+    box-shadow: 0 12px 30px rgba(255, 159, 28, 0.4) !important;
+    transform: translateY(-2px);
+  }
 }
 
 .statsContainer {
@@ -87,7 +95,7 @@
 .statValue {
   font-size: 2.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--color-primary), #10b981);
+  background: linear-gradient(135deg, #ff9f1c, #2ec4b6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -131,15 +139,16 @@
   align-items: center;
   text-align: center;
   padding: var(--spacing-xl);
-  background-color: var(--color-background);
-  border: 1px solid var(--color-border);
+  background: linear-gradient(135deg, #ffffff 0%, rgba(46, 196, 182, 0.03) 100%);
+  border: 2px solid rgba(46, 196, 182, 0.15);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(46, 196, 182, 0.2);
+    border-color: rgba(46, 196, 182, 0.4);
+    transform: translateY(-6px);
   }
 }
 
@@ -149,10 +158,11 @@
   justify-content: center;
   width: 3rem;
   height: 3rem;
-  background-color: rgba(199, 21, 133, 0.1);
+  background: linear-gradient(135deg, rgba(255, 159, 28, 0.2), rgba(46, 196, 182, 0.2));
   color: var(--color-primary);
   border-radius: var(--radius-md);
   margin-bottom: var(--spacing-md);
+  box-shadow: 0 4px 12px rgba(255, 159, 28, 0.15);
 }
 
 .featureTitle {
@@ -187,8 +197,8 @@
 }
 
 .navButton {
-  background: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  background: linear-gradient(135deg, #ff9f1c, #ffbf69);
+  border: 1px solid #ff9f1c;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   color: #ffffff;
@@ -196,13 +206,13 @@
   font-size: 0.9rem;
   font-weight: 600;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(199, 21, 133, 0.15);
+  box-shadow: 0 4px 12px rgba(255, 159, 28, 0.25);
 
   &:hover {
-    background: #b0106f;
-    border-color: #b0106f;
+    background: linear-gradient(135deg, #ffbf69, #ff9f1c);
+    border-color: #ffbf69;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(199, 21, 133, 0.25);
+    box-shadow: 0 6px 16px rgba(255, 159, 28, 0.35);
   }
 
   @media (max-width: 640px) {

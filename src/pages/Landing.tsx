@@ -3,6 +3,9 @@ import { ChefHat, Clock, DollarSign, Sparkles } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 import PageTransition from '../components/PageTransition'
+import ImageCarousel from '../components/ImageCarousel'
+import Testimonials from '../components/Testimonials'
+import CookingTips from '../components/CookingTips'
 import { useStats } from '../hooks/useStats'
 import styles from './Landing.module.scss'
 
@@ -149,6 +152,12 @@ export default function Landing() {
             </motion.div>
           ))}
         </motion.div>
+
+        <ImageCarousel />
+
+        <Testimonials />
+
+        <CookingTips />
       </div>
     </PageTransition>
   )

@@ -1,0 +1,141 @@
+.testimonialsSection {
+  width: 100%;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, rgba(203, 243, 240, 0.3) 0%, rgba(255, 191, 105, 0.1) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+    gap: 2rem;
+  }
+}
+
+.header {
+  text-align: center;
+  max-width: 600px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+  margin: 0 0 1rem 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+  }
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--color-accent);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.testimonialGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.card {
+  background: #ffffff;
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ff9f1c, #2ec4b6);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    box-shadow: 0 12px 24px rgba(46, 196, 182, 0.15);
+    border-color: rgba(46, 196, 182, 0.2);
+    transform: translateY(-4px);
+
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, rgba(255, 159, 28, 0.1), rgba(46, 196, 182, 0.1));
+  border-radius: 50%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-foreground);
+  margin: 0;
+}
+
+.country {
+  font-size: 0.875rem;
+  color: #2ec4b6;
+  margin: 0;
+  font-weight: 500;
+}
+
+.rating {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.star {
+  filter: drop-shadow(0 2px 4px rgba(255, 159, 28, 0.2));
+}
+
+.quote {
+  font-size: 0.95rem;
+  color: var(--color-accent);
+  line-height: 1.7;
+  margin: 0;
+  font-style: italic;
+}
