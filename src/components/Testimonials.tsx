@@ -14,9 +14,9 @@ interface Testimonial {
 const TESTIMONIALS: Testimonial[] = [
   {
     id: '1',
-    name: 'Sophia Rodriguez',
-    country: 'España',
-    quote: 'Como estudiante de intercambio, descubrir la cocina venezolana fue abridor de ojos. Este asistente me ha permitido hacer comidas auténticas sin gastar mucho dinero.',
+    name: 'Oriana Arias',
+    country: 'Venezuela',
+    quote: 'Como estudiante foranea de la carrera de odontologia en la que no me da mucho tiempo de organizar mis comidas me parece una excelente inciativa porque me permite  organizar mi plan semanal de comidas en poco tiempo',
     rating: 5,
     avatar: '👩‍🎓',
   },
