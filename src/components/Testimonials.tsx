@@ -16,7 +16,7 @@ const TESTIMONIALS: Testimonial[] = [
     id: '1',
     name: 'Oriana Arias',
     country: 'Venezuela',
-    quote: 'Como estudiante foranea de la carrera de odontologia en la que no me da mucho tiempo de organizar mis comidas me parece una excelente inciativa porque me permite  organizar mi plan semanal de comidas en poco tiempo',
+    quote: 'Como estudiante foranea de la carrera de odontologia en la que no me da mucho tiempo de organizar mis comidas me parece una excelente inciativa porque me permite  organizar mi plan semanal de comidas en poco tiempo.',
     rating: 5,
     avatar: '👩‍🎓',
   },
