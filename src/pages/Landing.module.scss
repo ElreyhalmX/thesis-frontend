@@ -188,11 +188,13 @@
 
   @media (max-width: 640px) {
     top: 1rem;
-    right: 50%;
-    transform: translateX(50%);
+    left: 0;
+    right: 0;
+    transform: none;
     width: 100%;
     justify-content: center;
     gap: 1rem;
+    padding: 0 1rem;
   }
 }
 

@@ -78,7 +78,7 @@ export default function Testimonials() {
       >
         <h2 className={styles.title}>Lo que dicen nuestros estudiantes</h2>
         <p className={styles.subtitle}>
-          Historias reales de estudiantes internacionales que transformaron su forma de cocinar
+          Historias reales de estudiantes que transformaron su forma de cocinar
         </p>
       </motion.div>
 
