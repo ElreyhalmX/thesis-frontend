@@ -88,7 +88,7 @@ export default function Ingredients() {
                 Ejemplo: "200g carne", "1/2 Harina".
               </p>
               <p className={styles.recommendedText}>
-                No agregues sal, agua o aceite (ya se asumen).
+                Recuerda agregar TAMBIÉN los condimentos básicos (Sal, Aceite, Agua) si quieres que se usen.
               </p>
             </div>
           </motion.div>

@@ -47,7 +47,7 @@ export default function FloatingBackground() {
               top: `${initialY}%`
             }}
             animate={{ 
-              opacity: [0.1, 0.2, 0.1], 
+              opacity: [0.4, 0.7, 0.4], 
               // Float around the initial position
               x: [0, moveX, 0],
               y: [0, moveY, 0],

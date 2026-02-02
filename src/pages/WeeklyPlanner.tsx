@@ -187,11 +187,11 @@ export default function WeeklyPlanner() {
                         className="pdf-recipe-page"
                         style={{ 
                             padding: '40px',
-                            background: '#1a1a1a', 
-                            color: '#e0e0e0',
+                            background: '#FFFFFF', 
+                            color: '#1a1a1a', 
                             fontFamily: 'Inter, sans-serif',
                             width: '794px',       
-                            minHeight: '1123px',  // Start at A4 height but grow
+                            minHeight: '1123px',
                             height: 'auto',       
                             display: 'flex',
                             flexDirection: 'column',
@@ -199,17 +199,17 @@ export default function WeeklyPlanner() {
                         }}
                     >
                         {/* Header */}
-                        <div style={{ textAlign: 'center', marginBottom: '30px', borderBottom: '2px solid #ff6b6b', paddingBottom: '20px' }}>
-                            <h1 style={{ color: '#ff6b6b', margin: 0, fontSize: '28px' }}>Sabores Universitarios</h1>
-                            <p style={{ margin: '5px 0 0', opacity: 0.7 }}>Plan Semanal Inteligente</p>
+                        <div style={{ textAlign: 'center', marginBottom: '30px', borderBottom: '3px solid #ff9f1c', paddingBottom: '20px' }}>
+                            <h1 style={{ color: '#ff9f1c', margin: 0, fontSize: '28px' }}>Sabores Universitarios</h1>
+                            <p style={{ margin: '5px 0 0', opacity: 0.7, color: '#ffbf69' }}>Plan Semanal Inteligente</p>
                         </div>
 
                         {/* Recipe Title & Day */}
                         <div style={{ marginBottom: '30px' }}>
                              <span style={{ 
                                  display: 'inline-block', 
-                                 background: '#4ecdc4', 
-                                 color: '#000', 
+                                 background: '#ffbf69', 
+                                 color: '#FFFFFF', 
                                  padding: '5px 15px', 
                                  borderRadius: '20px', 
                                  fontWeight: 'bold', 
@@ -217,16 +217,16 @@ export default function WeeklyPlanner() {
                              }}>
                                 {item.day}
                              </span>
-                             <h2 style={{ fontSize: '32px', margin: '10px 0', color: '#fff' }}>{item.recipe.title}</h2>
-                             <div style={{ display: 'flex', gap: '20px', color: '#aaa', fontSize: '16px' }}>
-                                <span>⏱️ {item.recipe.prepTime} min</span>
-                                <span>👥 {item.recipe.servings} porciones</span>
-                                <span>📊 {item.recipe.nutrition?.calories || 'N/A'} Kcal</span>
+                             <h2 style={{ fontSize: '32px', margin: '10px 0', color: '#ff9f1c' }}>{item.recipe.title}</h2>
+                             <div style={{ display: 'flex', gap: '20px', color: '#555', fontSize: '16px' }}>
+                                <span style={{display: 'flex', alignItems: 'center', gap: '5px'}}>⏱️ {item.recipe.prepTime} min</span>
+                                <span style={{display: 'flex', alignItems: 'center', gap: '5px'}}>👥 {item.recipe.servings} porciones</span>
+                                <span style={{display: 'flex', alignItems: 'center', gap: '5px'}}>📊 {item.recipe.nutrition?.calories || 'N/A'} Kcal</span>
                              </div>
                         </div>
 
                         {/* Description */}
-                        <p style={{ fontStyle: 'italic', color: '#ccc', lineHeight: '1.5', marginBottom: '30px', background: '#252525', padding: '15px', borderRadius: '8px' }}>
+                        <p style={{ fontStyle: 'italic', color: '#444', lineHeight: '1.5', marginBottom: '30px', background: '#cbf3f0', padding: '15px', borderRadius: '8px', borderLeft: '4px solid #2ec4b6' }}>
                             {item.recipe.description || item.rationale}
                         </p>
 
@@ -234,7 +234,7 @@ export default function WeeklyPlanner() {
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', marginBottom: '30px' }}>
                             {/* Ingredients */}
                             <div>
-                                <h3 style={{ borderBottom: '1px solid #444', paddingBottom: '10px', color: '#4ecdc4' }}>Ingredientes</h3>
+                                <h3 style={{ borderBottom: '2px solid #2ec4b6', paddingBottom: '10px', color: '#2ec4b6' }}>Ingredientes</h3>
                                 <ul style={{ paddingLeft: '20px', marginTop: '15px', lineHeight: '1.6' }}>
                                     {item.recipe.ingredients.map((ing, i) => (
                                         <li key={i} style={{ marginBottom: '5px' }}>{ing}</li>
@@ -245,20 +245,20 @@ export default function WeeklyPlanner() {
                             {/* Nutrition & Tips */}
                             <div>
                                 <div style={{ marginBottom: '30px' }}>
-                                    <h3 style={{ borderBottom: '1px solid #444', paddingBottom: '10px', color: '#4ecdc4' }}>Nutrición (por porción)</h3>
+                                    <h3 style={{ borderBottom: '2px solid #2ec4b6', paddingBottom: '10px', color: '#2ec4b6' }}>Nutrición (por porción)</h3>
                                     {item.recipe.nutrition ? (
                                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '15px' }}>
-                                            <div style={{ background: '#252525', padding: '10px', borderRadius: '5px', textAlign: 'center' }}>
-                                                <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.recipe.nutrition.protein}</div>
-                                                <div style={{ fontSize: '12px', opacity: 0.7 }}>Proteína</div>
+                                            <div style={{ background: '#cbf3f0', padding: '10px', borderRadius: '5px', textAlign: 'center' }}>
+                                                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2ec4b6' }}>{item.recipe.nutrition.protein}</div>
+                                                <div style={{ fontSize: '12px', opacity: 0.8 }}>Proteína</div>
                                             </div>
-                                            <div style={{ background: '#252525', padding: '10px', borderRadius: '5px', textAlign: 'center' }}>
-                                                <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.recipe.nutrition.carbs}</div>
-                                                <div style={{ fontSize: '12px', opacity: 0.7 }}>Carbs</div>
+                                            <div style={{ background: '#cbf3f0', padding: '10px', borderRadius: '5px', textAlign: 'center' }}>
+                                                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2ec4b6' }}>{item.recipe.nutrition.carbs}</div>
+                                                <div style={{ fontSize: '12px', opacity: 0.8 }}>Carbs</div>
                                             </div>
-                                            <div style={{ background: '#252525', padding: '10px', borderRadius: '5px', textAlign: 'center' }}>
-                                                <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.recipe.nutrition?.fat || 'N/A'}</div>
-                                                <div style={{ fontSize: '12px', opacity: 0.7 }}>Grasas</div>
+                                            <div style={{ background: '#cbf3f0', padding: '10px', borderRadius: '5px', textAlign: 'center' }}>
+                                                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2ec4b6' }}>{item.recipe.nutrition?.fat || 'N/A'}</div>
+                                                <div style={{ fontSize: '12px', opacity: 0.8 }}>Grasas</div>
                                             </div>
                                         </div>
                                     ) : <p style={{ opacity: 0.5 }}>Información no disponible.</p>}
@@ -266,8 +266,8 @@ export default function WeeklyPlanner() {
                                 
                                 {item.recipe.tips && item.recipe.tips.length > 0 && (
                                     <div>
-                                        <h3 style={{ borderBottom: '1px solid #444', paddingBottom: '10px', color: '#ffe66d' }}>Chef Tips</h3>
-                                        <ul style={{ paddingLeft: '20px', marginTop: '15px', fontSize: '14px', fontStyle: 'italic', color: '#e0e0e0' }}>
+                                        <h3 style={{ borderBottom: '2px solid #ff9f1c', paddingBottom: '10px', color: '#ff9f1c' }}>Chef Tips</h3>
+                                        <ul style={{ paddingLeft: '20px', marginTop: '15px', fontSize: '14px', fontStyle: 'italic', color: '#555' }}>
                                             {item.recipe.tips.map((tip, i) => (
                                                 <li key={i} style={{ marginBottom: '5px' }}>{tip}</li>
                                             ))}
@@ -279,7 +279,7 @@ export default function WeeklyPlanner() {
 
                         {/* Instructions - Full width at bottom */}
                         <div style={{ flex: 1 }}>
-                            <h3 style={{ borderBottom: '1px solid #444', paddingBottom: '10px', color: '#4ecdc4' }}>Instrucciones</h3>
+                            <h3 style={{ borderBottom: '2px solid #2ec4b6', paddingBottom: '10px', color: '#2ec4b6' }}>Instrucciones</h3>
                             <ol style={{ paddingLeft: '20px', marginTop: '15px', lineHeight: '1.6' }}>
                                 {item.recipe.instructions.map((inst, i) => (
                                     <li key={i} style={{ marginBottom: '10px' }}>{inst}</li>

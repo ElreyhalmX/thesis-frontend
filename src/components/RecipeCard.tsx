@@ -36,7 +36,7 @@ export default function RecipeCard({ recipe, onClick, dayBadge }: RecipeCardProp
 
     const fetchAIImage = async () => {
         try {
-            const response = await apiClient.post('/images/generate', { title: recipe.title });
+            const response = await apiClient.post('/images/generate', { title: recipe.title, ingredients: recipe.ingredients });
             if (response.data && response.data.image && mounted) {
                 setImage(response.data.image);
                 sessionStorage.setItem(`img_gen_${recipe.id}`, response.data.image);

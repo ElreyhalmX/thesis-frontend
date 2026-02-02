@@ -24,7 +24,7 @@ export default function Skeleton({ width = '100%', height = '100%', className = 
         }}
       />
       <div className={styles.iconContainer}>
-          <span className={styles.loadingText}>Generando imagen IA...</span>
+          <span className={styles.loadingText}>Generando imagen con IA...</span>
       </div>
     </div>
   );

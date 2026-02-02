@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import styles from './ImageCarousel.module.scss'
 
 interface CarouselImage {
@@ -14,42 +14,42 @@ interface CarouselImage {
 const CAROUSEL_IMAGES: CarouselImage[] = [
   {
     id: '1',
-    url: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&h=500&fit=crop',
+    url: 'https://images.unsplash.com/photo-1619683551733-90293a10a302?q=800&h=500&fit=crop',
     alt: 'Empanadas venezolanas',
     title: 'Empanadas',
     description: 'Deliciosas empanadas rellenas de queso y carne',
   },
   {
     id: '2',
-    url: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&h=500&fit=crop',
+    url: 'https://images.unsplash.com/photo-1619683909099-03814b162136?q=800&h=500&fit=crop',
     alt: 'Arepas venezolanas',
     title: 'Arepas',
     description: 'Las arepas, símbolo de la gastronomía venezolana',
   },
   {
     id: '3',
-    url: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&h=500&fit=crop',
+    url: 'https://us.allofpan.com/wp-content/uploads/2021/08/cachapa-1.jpg?q=800&h=500&fit=crop',
     alt: 'Cachapas',
     title: 'Cachapas',
     description: 'Dulces cachapas con queso de mano y salsa',
   },
   {
     id: '4',
-    url: 'https://images.unsplash.com/photo-1515182629504-727d32753b41?w=800&h=500&fit=crop',
+    url: 'https://joropofood.com/cdn/shop/articles/hallacas_navidenas.jpg?v=1730061632w=800&h=500&fit=crop',
     alt: 'Hallacas venezolanas',
     title: 'Hallacas',
     description: 'Tradición culinaria en cada hallaca',
   },
   {
     id: '5',
-    url: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&h=500&fit=crop',
+    url: 'https://images.unsplash.com/photo-1640718534342-09990c8b0681?q=800&h=500&fit=crop',
     alt: 'Tequeños',
     title: 'Tequeños',
     description: 'Tequeños crujientes, perfectos para cualquier ocasión',
   },
   {
     id: '6',
-    url: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&h=500&fit=crop',
+    url: 'https://comidasvenezolanas.net/wp-content/uploads/2019/04/Pabellon-criollo-1.jpg?q=800&h=500&fit=crop',
     alt: 'Pabellón criollo',
     title: 'Pabellón Criollo',
     description: 'El plato nacional por excelencia',
