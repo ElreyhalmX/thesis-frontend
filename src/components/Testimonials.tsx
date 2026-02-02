@@ -22,28 +22,28 @@ const TESTIMONIALS: Testimonial[] = [
   },
   {
     id: '2',
-    name: 'Marcus Chen',
-    country: 'Taiwán',
-    quote: 'Vivía fuera de la cocina, pero con Sabores Universitarios aprendí que no es difícil. Las recetas son claras y los ingredientes están siempre disponibles.',
+    name: 'Jose Gonzalez',
+    country: 'Venezuela',
+    quote: 'La mejor solucion culinaria para estudiantes. No solo aprendo a cocinar, sino que también aprendo sobre la cultura venezolana a través de la comida.',
     rating: 5,
     avatar: '👨‍🎓',
   },
   {
     id: '3',
-    name: 'Isabella Petrov',
-    country: 'Rusia',
-    quote: 'La comida venezolana es increíble y ahora puedo prepararla en mi apartamento. ¡El pabellón criollo quedó perfecto la primera vez!',
+    name: 'Jennire Vetri',
+    country: 'Venezuela',
+    quote: 'La comida venezolana es increíble y ahora puedo prepararla en mi apartamento. ¡Estoy cansada de los deliverys!',
     rating: 5,
     avatar: '👩‍🎓',
   },
   {
     id: '4',
-    name: 'Ahmed Karim',
-    country: 'Marruecos',
-    quote: 'La mejor app para estudiantes. No solo aprendo a cocinar, sino que también aprendo sobre la cultura venezolana a través de la comida.',
+    name: 'Jesus Giovannetti',
+    country: 'Venezuela',
+    quote: 'Es una iniciativa excelente teniendo en cuenta los habitos alimentncios de los estudiantes foraneos como es mi caso',
     rating: 5,
     avatar: '👨‍🎓',
-  },
+  }
 ]
 
 export default function Testimonials() {
